@@ -1,0 +1,125 @@
+# ~/.config/starship.toml
+
+# Customize the prompt order and format
+format = """
+[┌───────────────────>](bold green) $username$hostname $fill $battery$time
+[│](bold green)$directory$git_branch$git_status$git_metrics$git_commit
+[│](bold green)$docker_context$kubernetes$terraform$vagrant
+[└─>](bold green) $cmd_duration $character """
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+scan_timeout = 500
+
+command_timeout = 2000
+
+# Fill character (empty space) between the left and right prompt
+[fill]
+symbol = " "
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = "[✔](bold green)"
+error_symbol = '[✗](bold red)'
+
+# Username and hostname
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+disabled = false
+format = "[$user]($style) on[$hostname]($style) "
+show_always = true
+aliases = { "jackharter" = "jacques" }
+
+[hostname]
+style = "bold purple"
+ssh_only = false
+trim_at = "."
+disabled = false
+aliases = { "tekdek" = "🏠" }
+format = "[$hostname](bold purple)"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+[git_branch]
+symbol = "⚡ "  # Lightning Bolt Symbol
+style = "bold purple"
+
+[git_metrics]
+disabled = false
+
+[git_status]
+staged = "[+](green)"
+untracked = "[?](red)"
+modified = "[*](yellow)"
+
+[azure]
+disabled = false
+format = "on [$symbol($username)]($style) "
+symbol = "󰠅 "
+style = "blue"
+
+[cmd_duration]
+min_time = 1000
+style = "bold yellow"
+show_milliseconds = true
+
+[directory]
+truncation_symbol = '…/'
+truncation_length = 3
+
+[docker_context]
+format = 'via [🐋 $context](blue bold)'
+disabled = true
+
+[gcloud]
+format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
+symbol = "☁️ "
+disabled = true
+style = "bold red"
+
+# Battery status, comment this out if you're on a desktop or you don't care about battery status
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡"
+discharging_symbol = "🔌"
+disabled = false
+format = '[$symbol $percentage]($style) '
+display = [ 
+    { style = "red bold", threshold = 10 }, 
+    { style = "yellow bold", threshold = 30 }, 
+    { style = "green bold", threshold = 100 } 
+    ]
+
+# Time module
+[time]
+disabled = false
+use_12hr = false
+format = '[⌚ $time]($style) '
+time_format = '%H:%M'
+style = "white italic"
+
+[kubernetes]
+format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
+disabled = false
+contexts = [
+    { context_pattern = "dev.local.cluster.k8s", style = "bold green", symbol = "💔 " },
+]
+
+[helm]
+format = 'via [⎈ $version](bold white) '
+
+
+[terraform]
+format = '[🚜 $version $workspace]($style) '
+
+# ~/.config/starship.toml
+
+[vagrant]
+format = 'via [⍱ $version](bold white) '
