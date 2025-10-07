@@ -1,0 +1,16 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Jack Harter
+	email = jack.harter@me.com
+[pull]
+	rebase = false
+[pager]
+	log = false
+	diff = false
+	branch = false
+[credential]
+	helper = osxkeychain
