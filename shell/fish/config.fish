@@ -20,4 +20,3 @@ string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-pa
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/homebrew/share/google-cloud-sdk/path.fish.inc' ]; . '/opt/homebrew/share/google-cloud-sdk/path.fish.inc'; end
 # GitHub token should be set via environment variable or secure storage
-# set -gx GITHUB_PERSONAL_ACCESS_TOKEN "your-token-here"
