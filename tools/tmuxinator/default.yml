@@ -1,0 +1,21 @@
+name: default
+root: ~/Developer
+startup_window: editor
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        # Pane 1: "Sidebar" (Left)
+        - lf # or 'ls -R' or any file explorer
+        # Pane 2: "Main Editor" (Right - becomes large because of main-vertical)
+        - nvim
+        -
+      # Pane 3: "Bottom Terminal"
+      options:
+        main-pane-width: 40 # Adjusts the 'sidebar' width
+  - git:
+      panes:
+        - gitui
+  - monitoring:
+      panes:
+        - btop
