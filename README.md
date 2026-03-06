@@ -6,35 +6,38 @@ My personal development environment configuration files for macOS, organized for
 
 ```text
 configs/
-├── lua/                    # Neovim configuration (Lua)
-│   ├── config/            # Plugin manager setup
-│   │   └── lazy.lua       # Lazy.nvim configuration
-│   ├── core/              # Core Neovim settings
-│   │   ├── autocmds.lua   # Auto commands
-│   │   ├── keymaps.lua    # Key mappings
-│   │   └── options.lua    # Editor options
-│   └── plugins/           # Plugin configurations
-│       ├── completion.lua # Auto-completion setup
-│       ├── editor.lua     # Editor enhancements
-│       ├── git.lua        # Git integration
-│       ├── lsp.lua        # Language Server Protocol
-│       ├── navigation.lua # File navigation
-│       └── ui.lua         # UI enhancements
+├── nvim/                   # Neovim configuration
+│   ├── init.lua           # Entry point
+│   └── lua/               # Lua modules
+│       ├── config/        # Plugin manager setup
+│       │   └── lazy.lua   # Lazy.nvim configuration
+│       ├── core/          # Core Neovim settings
+│       │   ├── autocmds.lua   # Auto commands
+│       │   ├── keymaps.lua    # Key mappings
+│       │   └── options.lua    # Editor options
+│       └── plugins/       # Plugin configurations
+│           ├── completion.lua # Auto-completion setup
+│           ├── editor.lua     # Editor enhancements
+│           ├── git.lua        # Git integration
+│           ├── lsp.lua        # Language Server Protocol
+│           ├── navigation.lua # File navigation
+│           └── ui.lua         # UI enhancements
 ├── shell/                 # Shell configurations
-│   ├── .zshrc            # Zsh with Oh My Zsh & Powerlevel10k
-│   ├── .bash_profile     # Bash profile
-│   ├── .p10k.zsh         # Powerlevel10k theme
-│   └── fish/             # Fish shell configuration
-│       ├── config.fish   # Main fish config
-│       ├── fish_plugins  # Fisher plugin list
-│       ├── completions/  # Custom completions
-│       ├── conf.d/       # Configuration snippets
-│       └── functions/    # Custom functions
+│   ├── fish/              # Fish shell configuration
+│   │   ├── config.fish   # Main fish config
+│   │   ├── fish_plugins  # Fisher plugin list
+│   │   ├── completions/  # Custom completions
+│   │   ├── conf.d/       # Configuration snippets
+│   │   └── functions/    # Custom functions
+│   └── omf/              # Oh My Fish configuration
+│       ├── bundle        # Installed packages
+│       ├── channel       # Release channel
+│       └── theme         # Active theme
 ├── git/                  # Git configuration
 │   └── .gitconfig        # Git settings and aliases
 ├── terminal/             # Terminal applications
-│   ├── .tmux.conf       # Tmux configuration
-│   ├── .vimrc           # Vim configuration
+│   ├── ghostty.config   # Ghostty terminal
+│   ├── tmux.conf        # Tmux configuration
 │   └── starship.toml    # Starship prompt
 └── tools/                # Development tools
     ├── gh/              # GitHub CLI
@@ -52,13 +55,19 @@ Each subdirectory contains its own README with specific setup instructions. Thes
 Most configurations can be symlinked to their expected locations:
 
 ```bash
-# Example: Neovim
-ln -s ~/Developer/configs/lua ~/.config/nvim
+# Neovim
+ln -s ~/Developer/configs/nvim ~/.config/nvim
 
-# Example: Fish
+# Fish
 ln -s ~/Developer/configs/shell/fish ~/.config/fish
 
-# Example: Git
+# Oh My Fish
+ln -s ~/Developer/configs/shell/omf ~/.config/omf
+
+# Starship
+ln -s ~/Developer/configs/terminal/starship.toml ~/.config/starship.toml
+
+# Git
 ln -s ~/Developer/configs/git/.gitconfig ~/.gitconfig
 ```
 
@@ -66,8 +75,8 @@ See individual README files for detailed setup instructions.
 
 ## 📚 Documentation
 
-- [lua/](lua/README.md) - Neovim configuration
-- [shell/](shell/README.md) - Shell configurations (zsh, bash, fish)
+- [nvim/](nvim/README.md) - Neovim configuration
+- [shell/](shell/README.md) - Shell configurations (fish, omf)
 - [git/](git/README.md) - Git configuration
 - [terminal/](terminal/README.md) - Terminal tools (tmux, vim, starship)
 - [tools/](tools/README.md) - Development tools
