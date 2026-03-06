@@ -45,6 +45,15 @@ return {
 				},
 			})
 			vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { silent = true, desc = "Toggle file tree" })
+
+			-- Auto-open nvim-tree when nvim starts with no file
+			vim.api.nvim_create_autocmd("VimEnter", {
+				callback = function()
+					if vim.fn.argc() == 0 then
+						require("nvim-tree.api").tree.open()
+					end
+				end,
+			})
 		end,
 	},
 

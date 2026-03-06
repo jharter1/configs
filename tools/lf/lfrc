@@ -1,0 +1,12 @@
+set shell sh
+
+cmd open ${{
+    case $(file --mime-type -Lb "$f") in
+        image/*|application/pdf|video/*|audio/*)
+            open "$fx"
+            ;;
+        *)
+            nvim "$fx"
+            ;;
+    esac
+}}
