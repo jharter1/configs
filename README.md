@@ -69,6 +69,12 @@ ln -s ~/Developer/configs/terminal/starship.toml ~/.config/starship.toml
 
 # Git
 ln -s ~/Developer/configs/git/.gitconfig ~/.gitconfig
+
+# Ghostty
+ln -s ~/Developer/configs/terminal/ghostty.config ~/.config/ghostty/config
+
+# Tmux
+ln -s ~/Developer/configs/terminal/tmux.conf ~/.config/tmux/tmux.conf
 ```
 
 See individual README files for detailed setup instructions.
