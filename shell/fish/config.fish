@@ -26,7 +26,7 @@ if status is-interactive
 
     # Quick edit config
     abbr -a fishconfig '$EDITOR ~/.config/fish/config.fish'
-    abbr -a tmuxconfig '$EDITOR ~/.tmux.conf'
+    abbr -a tmuxconfig '$EDITOR ~/.config/tmux/tmux.conf'
 end
 
 # Better ls with eza (install with: brew install eza)

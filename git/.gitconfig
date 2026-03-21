@@ -8,9 +8,22 @@
 	email = jack.harter@me.com
 [pull]
 	rebase = false
-[pager]
-	log = false
-	diff = false
-	branch = false
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	dark = true
+	syntax-theme = Dracula
+	side-by-side = false
+[merge]
+	conflictstyle = diff3
 [credential]
 	helper = osxkeychain
+[push]
+	default = current
+[alias]
+	fixup = commit --fixup
+	recent = branch --sort=-committerdate --format='%(refname:short)' -10
+	aliases = config --get-regexp alias
