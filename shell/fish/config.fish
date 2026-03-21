@@ -1,3 +1,6 @@
+# Homebrew (must come first so pyenv/rbenv/starship are on PATH)
+fish_add_path /opt/homebrew/bin /opt/homebrew/sbin
+
 # Autosuggestion color: #6272a4 (Dracula comment purple) stands out against
 # the transparent background better than the default dark gray (555 brblack).
 set --global fish_color_autosuggestion '#6272a4'
