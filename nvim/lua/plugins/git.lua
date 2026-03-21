@@ -1,6 +1,17 @@
 -- Git integration plugins
 return {
 	{
+		"folke/snacks.nvim",
+		opts = {
+			lazygit = { enabled = true },
+		},
+		keys = {
+			{ "<leader>gg", function() require("snacks").lazygit() end, desc = "LazyGit" },
+			{ "<leader>gf", function() require("snacks").lazygit.log_file() end, desc = "LazyGit file history" },
+		},
+	},
+
+	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufReadPre",
 		opts = {

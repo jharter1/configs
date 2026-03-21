@@ -57,6 +57,20 @@ return {
 		end,
 	},
 
+	-- Symbol outline sidebar
+	{
+		"stevearc/aerial.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "<leader>a", "<cmd>AerialToggle<cr>", desc = "Toggle symbol outline" },
+		},
+		opts = {
+			layout = { min_width = 28 },
+			show_guides = true,
+			attach_mode = "global",
+		},
+	},
+
 	-- Buffer-based file management
 	{
 		"stevearc/oil.nvim",

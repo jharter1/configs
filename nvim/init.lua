@@ -19,13 +19,9 @@ require("config.lazy")
 
 -- Load all plugins
 require("lazy").setup({
-	-- Import all plugin modules
-	{ import = "plugins.ui" },
-	{ import = "plugins.editor" },
-	{ import = "plugins.navigation" },
-	{ import = "plugins.lsp" },
-	{ import = "plugins.completion" },
-	{ import = "plugins.git" },
+	{ import = "plugins" },
+}, {
+	rocks = { enabled = false },
 })
 
 -- Set colorscheme
