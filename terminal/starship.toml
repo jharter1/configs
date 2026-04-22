@@ -15,7 +15,7 @@ format = """
 [├─ ](bold cyan)$directory
 [├─ ](bold cyan)$git_branch $git_status $git_commit
 [├─ ](bold cyan)$docker_context$kubernetes $aws $ruby $python $nodejs $golang $rust $package
-[╰─❯ ](bold cyan)$status [ took ](dimmed)$cmd_duration $character"""
+[╰─❯ ](bold cyan)$status (dimmed)$cmd_duration $character"""
 
 # Show macOS logo
 [os]
@@ -95,17 +95,17 @@ format = "on [$symbol $branch]($style)"
 [git_status]
 style = "bold yellow"
 format = '([\[$all_status$ahead_behind\]]($style))'
-staged = '[+\($count\)](green)'
-untracked = '[?\($count\)](red)'
-modified = '[!\($count\)](yellow)'
-conflicted = '=$(count)'
-ahead = '⇡${count}'
-behind = '⇣${count}'
-diverged = '⇕⇡${ahead_count}⇣${behind_count}'
-up_to_date = '✓'
-stashed = '⚑${count} '
-renamed = '»$count'
-deleted = '✘$count'
+staged = '[✓ \($count\)](green)'
+untracked = '[? \($count\)](blue)'
+modified = '[! \($count\)](yellow)'
+conflicted = '[× \($count\)](red)'
+ahead = '[⇡ \($count\)](cyan)'
+behind = '[⇣ \($count\)](cyan)'
+diverged = '[⇕ \($ahead_count\)⇡\($behind_count\)](red)'
+up_to_date = '[✓](green)'
+stashed = '[⚑ \($count\)](magenta)'
+renamed = '[» \($count\)](yellow)'
+deleted = '[✘ \($count\)](red)'
 
 [git_commit]
 commit_hash_length = 7
@@ -127,7 +127,7 @@ format = "[$symbol$version](bold red)"
 [python]
 disabled = false
 symbol = "🐍 "
-format = "[$symbol$version( \\($virtualenv\\))](bold white)"
+format = "[$symbol$version](bold white)[ ($virtualenv)](dimmed cyan)"
 
 [nodejs]
 disabled = false
