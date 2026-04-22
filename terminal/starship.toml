@@ -11,19 +11,10 @@ scan_timeout = 10
 command_timeout = 500
 
 format = """
-[╭─ ](bold cyan)$os $username$hostname $sudo$jobs$shlvl
-[├─ ](bold cyan)$directory
-[├─ ](bold cyan)$git_branch $git_status $git_commit
+[╭─ ](bold cyan)$username$hostname $sudo$jobs$shlvl
+[├─ ](bold cyan)$directory $git_branch$git_status$git_commit
 [├─ ](bold cyan)$docker_context$kubernetes $aws $ruby $python $nodejs $golang $rust $package
 [╰─❯ ](bold cyan)$status (dimmed)$cmd_duration $character"""
-
-# Show macOS logo
-[os]
-disabled = false
-format = "[$symbol](bold white)"
-
-[os.symbols]
-Macos = " "  # Apple icon
 
 # Shows if you have sudo cached (security awareness!)
 [sudo]
@@ -84,7 +75,7 @@ truncation_symbol = '…/'
 truncation_length = 3
 home_symbol = "~"
 style = "bold blue"
-format = "[📂 $path]($style)[$read_only]($read_only_style)"
+format = "[\uEA83 $path]($style)[$read_only]($read_only_style)"
 read_only = "🔒"
 
 [git_branch]
@@ -121,27 +112,27 @@ format = "[+$added]($added_style)/[-$deleted]($deleted_style)"
 
 [ruby]
 disabled = false
-symbol = "💎 "
+symbol = "\uE791 "
 format = "[$symbol$version](bold red)"
 
 [python]
 disabled = false
-symbol = "🐍 "
-format = "[$symbol$version](bold white)[ ($virtualenv)](dimmed cyan)"
+symbol = "\uE73C "
+format = "[$symbol$version](bold yellow)[ ($virtualenv)](dimmed cyan)"
 
 [nodejs]
 disabled = false
-symbol = "⬢ "
+symbol = "\uE718 "
 format = "[$symbol$version](bold green)"
 
 [golang]
 disabled = false
-symbol = "🐹 "
+symbol = "\uE626 "
 format = "[$symbol$version](bold cyan)"
 
 [rust]
 disabled = false
-symbol = "🦀 "
+symbol = "\uE7A8 "
 format = "[$symbol$version](bold red)"
 
 [terraform]
@@ -201,6 +192,7 @@ sigint_symbol = "🧱"
 signal_symbol = "⚡"
 
 [kubernetes]
-format = '[⛵️ $context \($namespace\)](dimmed cyan) '
+symbol = "\uE81D "
+format = '[$symbol$context ($namespace)](dimmed cyan) '
 disabled = false
 

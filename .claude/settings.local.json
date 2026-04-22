@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(find /Users/jackharter/Developer/configs -name README* -o -name *.md)",
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(echo \"=== $f ===\")",
+      "Read(//Users/jackharter/.config/nvim/lua/plugins/**)",
+      "Bash(done)",
+      "Bash(cp ~/.config/fish/functions/pip.fish ~/Developer/configs/shell/fish/functions/pip.fish)",
+      "Bash(cp ~/.config/fish/conf.d/fish_frozen_key_bindings.fish ~/Developer/configs/shell/fish/conf.d/fish_frozen_key_bindings.fish)",
+      "Bash(cp ~/.config/fish/conf.d/fish_frozen_theme.fish ~/Developer/configs/shell/fish/conf.d/fish_frozen_theme.fish)",
+      "Bash(cp -r ~/.config/nvim ~/.config/nvim.bak)",
+      "Bash(cp -r ~/.config/fish ~/.config/fish.bak)",
+      "Bash(cp -r ~/.config/omf ~/.config/omf.bak)",
+      "Bash(cp ~/.config/starship.toml ~/.config/starship.toml.bak)",
+      "Bash(cp ~/.gitconfig ~/.gitconfig.bak)",
+      "Bash(rm -rf ~/.config/nvim)",
+      "Bash(ln -s ~/Developer/configs/nvim ~/.config/nvim)",
+      "Bash(rm -rf ~/.config/omf)",
+      "Bash(ln -s ~/Developer/configs/shell/omf ~/.config/omf)",
+      "Bash(rm ~/.config/starship.toml)",
+      "Bash(rm -rf ~/.config/fish)",
+      "Bash(ln -s ~/Developer/configs/shell/fish ~/.config/fish)"
+    ]
+  }
+}

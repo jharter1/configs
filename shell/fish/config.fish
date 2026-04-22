@@ -62,26 +62,15 @@ if command -v fzf > /dev/null
     fzf --fish | source
 end
 
-# Lazy-load pyenv/rbenv/conda only when needed (major shell startup speedup)
-function __init_python_env
-    if command -v pyenv > /dev/null
-        eval "$(pyenv init -)"
-    end
-    if command -v rbenv > /dev/null
-        eval "$(rbenv init - fish)"
-    end
-    if test -f $HOME/anaconda3/bin/conda
-        eval $HOME/anaconda3/bin/conda "shell.fish" "hook" $argv | source
-    end
-    functions --erase __init_python_env
+if command -v pyenv > /dev/null
+    eval "$(pyenv init -)"
 end
-
-# Trigger lazy loading on first python/ruby command
-abbr -a python '__init_python_env; python'
-abbr -a python3 '__init_python_env; python3'
-abbr -a ruby '__init_python_env; ruby'
-abbr -a rbenv '__init_python_env; rbenv'
-abbr -a pyenv '__init_python_env; pyenv'
+if command -v rbenv > /dev/null
+    eval "$(rbenv init - fish)"
+end
+if test -f $HOME/anaconda3/bin/conda
+    eval $HOME/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+end
 
 starship init fish | source
 
