@@ -1,0 +1,29 @@
+name: infra
+root: ~/Developer
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim # Updated to nvim!
+        -
+      # command pane
+  - terraform:
+      root: ~/Developer/terraform
+      panes:
+        - terraform plan -out=plan.tfplan
+        -
+      # second pane for apply/etc
+  - k8s:
+      layout: tiled
+      panes:
+        - kubectl get pods -A -w
+        - kubectl get nodes -w
+        -
+      # manual kubectl commands
+  - monitoring:
+      layout: even-horizontal
+      panes:
+        - btop
+        -
+
+# docker ps or other monitoring

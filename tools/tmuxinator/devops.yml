@@ -1,0 +1,23 @@
+name: devops
+root: ~/Developer
+
+startup_window: editor
+
+windows:
+  - editor:
+      panes:
+        - nvim
+  
+  - docker:
+      panes:
+        - docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+        - # docker commands
+  
+  - cloud:
+      panes:
+        - # aws/gcloud commands
+        - # kubectl commands
+  
+  - git:
+      panes:
+        - gitui

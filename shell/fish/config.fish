@@ -62,27 +62,32 @@ if command -v fzf > /dev/null
     fzf --fish | source
 end
 
-eval "$(pyenv init -)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if test -f $HOME/anaconda3/bin/conda
-    eval $HOME/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+# Lazy-load pyenv/rbenv/conda only when needed (major shell startup speedup)
+function __init_python_env
+    if command -v pyenv > /dev/null
+        eval "$(pyenv init -)"
+    end
+    if command -v rbenv > /dev/null
+        eval "$(rbenv init - fish)"
+    end
+    if test -f $HOME/anaconda3/bin/conda
+        eval $HOME/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+    end
+    functions --erase __init_python_env
 end
-# <<< conda initialize <<<
 
-status --is-interactive; and rbenv init - fish | source
+# Trigger lazy loading on first python/ruby command
+abbr -a python '__init_python_env; python'
+abbr -a python3 '__init_python_env; python3'
+abbr -a ruby '__init_python_env; ruby'
+abbr -a rbenv '__init_python_env; rbenv'
+abbr -a pyenv '__init_python_env; pyenv'
 
 starship init fish | source
 
-string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/homebrew/share/google-cloud-sdk/path.fish.inc' ]; . '/opt/homebrew/share/google-cloud-sdk/path.fish.inc'; end
-
-# GitHub token should be set via environment variable or secure storage
-set -gx NOMAD_ADDR http://10.0.0.50:4646
+# Lazy-load optional integrations only if needed
+test -f /opt/homebrew/share/google-cloud-sdk/path.fish.inc; and functions -q __init_gcloud; or function __init_gcloud; . /opt/homebrew/share/google-cloud-sdk/path.fish.inc; functions --erase __init_gcloud; end
+abbr -a gcloud '__init_gcloud; gcloud'
 
 set PATH $PATH $HOME/.local/bin
-
-test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish
+set -gx NOMAD_ADDR http://10.0.0.50:4646

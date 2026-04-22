@@ -6,9 +6,9 @@ add_newline = true
 
 right_format = "$battery$time"
 
-scan_timeout = 30
+scan_timeout = 10
 
-command_timeout = 6000
+command_timeout = 500
 
 format = """
 [╭─](bold cyan)$os$username$hostname[ -> ](bold cyan)$sudo$jobs$shlvl
@@ -143,13 +143,10 @@ symbol = "🦀 "
 format = "via [$symbol$version](bold red)"
 
 [terraform]
-format = '[🚜 $version $workspace]($style) '
+disabled = true
 
 [azure]
-disabled = false
-format = "on [$symbol($username)]($style) "
-symbol = "󰠅 "
-style = "blue"
+disabled = true
 
 [cmd_duration]
 min_time = 500
@@ -205,8 +202,3 @@ signal_symbol = "⚡"
 format = 'via [⛵️ $context \($namespace\)](dimmed cyan) '
 disabled = false
 
-[helm]
-format = 'via [⎈ $version](bold white) '
-
-[vagrant]
-format = 'via [⍱ $version](bold white) '

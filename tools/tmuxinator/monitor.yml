@@ -1,0 +1,12 @@
+name: monitor
+root: ~/
+windows:
+  - dashboard:
+      layout: tiled
+      panes:
+        - btop
+        - watch -n 2 'docker ps --format "table {{.Names}}\t{{.Status}}"'
+        - watch -n 2 'kubectl get pods'
+        -
+
+# manual commands
