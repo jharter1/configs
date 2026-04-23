@@ -1,7 +1,11 @@
 -- UI and visual plugins
 return {
 	-- Color scheme
-	{ "dracula/vim", name = "dracula" },
+	{
+		"folke/tokyonight.nvim",
+		priority = 1000,
+		opts = { style = "moon" },
+	},
 
 	-- Status line
 	{
@@ -10,7 +14,7 @@ return {
 		config = function()
 			require("lualine").setup({
 				options = {
-					theme = "dracula",
+					theme = "tokyonight",
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 				},
@@ -126,6 +130,8 @@ return {
 				{ "<leader>hp", desc = "Preview hunk" },
 				{ "<leader>c", group = "Code" },
 				{ "<leader>ca", desc = "Code actions" },
+				{ "<leader>ci", desc = "Toggle inlay hints" },
+				{ "<leader>D", desc = "Go to type definition" },
 				{ "<leader>rn", desc = "Rename symbol" },
 				{ "<leader>e", desc = "Toggle file tree" },
 				{ "<leader>o", desc = "Open oil file browser" },
@@ -133,8 +139,18 @@ return {
 				{ "<leader>t", group = "Test" },
 				{ "<leader>tt", desc = "Run nearest test" },
 				{ "<leader>tf", desc = "Run file tests" },
+				{ "<leader>tl", desc = "Run last test" },
 				{ "<leader>ts", desc = "Toggle test summary" },
 				{ "<leader>to", desc = "Toggle test output" },
+				{ "<leader>d", group = "Debug" },
+				{ "<leader>db", desc = "Toggle breakpoint" },
+				{ "<leader>dB", desc = "Conditional breakpoint" },
+				{ "<leader>dc", desc = "Continue / start" },
+				{ "<leader>ds", desc = "Step over" },
+				{ "<leader>di", desc = "Step into" },
+				{ "<leader>do", desc = "Step out" },
+				{ "<leader>du", desc = "Toggle debug UI" },
+				{ "<leader>dr", desc = "Open REPL" },
 			})
 		end,
 	},

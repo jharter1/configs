@@ -34,6 +34,28 @@ return {
 		end,
 	},
 
+	-- Sticky context header showing current function/class while scrolling
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = "BufReadPre",
+		opts = {
+			max_lines = 4,
+			min_window_height = 20,
+			multiline_threshold = 1,
+		},
+	},
+
+	-- Surround: add/change/delete surrounding pairs (ys, cs, ds)
+	{
+		"kylechui/nvim-surround",
+		version = "*",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup()
+		end,
+	},
+
 	-- Auto-pairs for brackets and quotes
 	{
 		"windwp/nvim-autopairs",

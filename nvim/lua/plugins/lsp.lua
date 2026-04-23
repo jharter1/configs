@@ -82,6 +82,12 @@ return {
 							autoSearchPaths = true,
 							useLibraryCodeForTypes = true,
 							diagnosticMode = "workspace",
+							inlayHints = {
+								variableTypes = true,
+								functionReturnTypes = true,
+								callArgumentNames = true,
+								pytestParameters = true,
+							},
 						},
 					},
 				},
@@ -98,6 +104,15 @@ return {
 						},
 						staticcheck = true,
 						gofumpt = true,
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = true,
+							rangeVariableTypes = true,
+						},
 					},
 				},
 			})
@@ -174,11 +189,27 @@ return {
 				severity_sort = true,
 			})
 
+			-- Enable inlay hints when server supports them
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client and client.supports_method("textDocument/inlayHint") then
+						vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+					end
+				end,
+			})
+
 			-- LSP keybindings
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+			vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
+			vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+			vim.keymap.set("n", "<leader>ci", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end, { desc = "Toggle inlay hints" })
 
 			-- Diagnostic navigation
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })

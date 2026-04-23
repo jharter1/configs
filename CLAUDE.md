@@ -34,7 +34,7 @@ Three-tier Lua structure:
 
 **Keymaps** — Leader is `<Space>`. All custom mappings require a `desc` property for which-key discoverability.
 
-**Color scheme** — Catppuccin mocha. UI plugins (lualine, bufferline, etc.) should use it.
+**Color scheme** — Tokyo Night (`tokyonight-night`). UI plugins (lualine, bufferline, etc.) should use it.
 
 ## Shell (`shell/fish/`)
 

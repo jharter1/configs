@@ -6,17 +6,24 @@ return {
 		event = "InsertEnter",
 	},
 
+	-- Kind icons for completion menu
+	{ "onsails/lspkind.nvim" },
+
 	-- Completion engine
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-vsnip",
+			"onsails/lspkind.nvim",
 		},
 		config = function()
 			local cmp = require("cmp")
+			local lspkind = require("lspkind")
+
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -36,19 +43,18 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "vsnip" },
 					{ name = "buffer" },
 					{ name = "path" },
 				}),
 				formatting = {
-					format = function(entry, vim_item)
-						vim_item.menu = ({
-							nvim_lsp = "[LSP]",
-							buffer = "[Buffer]",
-							path = "[Path]",
-						})[entry.source.name]
-						return vim_item
-					end,
+					format = lspkind.cmp_format({
+						mode = "symbol_text",
+						maxwidth = 50,
+						ellipsis_char = "...",
+						show_labelDetails = true,
+					}),
 				},
 			})
 		end,

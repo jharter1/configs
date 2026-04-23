@@ -25,6 +25,6 @@ require("lazy").setup({
 })
 
 -- Set colorscheme
-vim.cmd([[colorscheme dracula]])
+vim.cmd([[colorscheme tokyonight]])
 
 

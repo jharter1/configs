@@ -21,3 +21,17 @@ opt.expandtab = true
 -- Search
 opt.ignorecase = true
 opt.smartcase = true
+
+-- Splits
+opt.splitright = true
+opt.splitbelow = true
+
+-- Scroll
+opt.scrolloff = 8
+opt.signcolumn = "yes"
+
+-- Performance
+opt.updatetime = 250
+
+-- Persistent undo across sessions
+opt.undofile = true
