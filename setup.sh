@@ -16,7 +16,8 @@ link() {
   fi
 
   if [ -e "$dst" ]; then
-    local backup="${dst}.bak.$(date +%Y%m%d%H%M%S)"
+    local backup
+    backup="${dst}.bak.$(date +%Y%m%d%H%M%S)"
     echo "back  $dst -> $backup"
     mv "$dst" "$backup"
   fi
