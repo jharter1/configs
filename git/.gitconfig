@@ -25,6 +25,8 @@
     helper =
 [include]
     path = ~/.gitconfig.local
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [push]
 	default = current
 [alias]
