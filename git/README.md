@@ -1,19 +1,20 @@
 # Git Configuration
 
-Personal Git configuration with user settings, LFS support, and macOS credential helper.
+Personal Git configuration with user settings, LFS support, and platform-aware credential helper setup.
 
 ## 📄 Files
 
 - `.gitconfig` - Main Git configuration file
+- `gitconfig.linux` - Linux-specific overrides (credential helper); symlink to `~/.gitconfig.local`
 
 ## 🚀 Installation
 
 ```bash
-# Symlink configuration
+# Symlink main configuration
 ln -s ~/Developer/configs/git/.gitconfig ~/.gitconfig
 
-# Or copy if you prefer
-cp ~/Developer/configs/git/.gitconfig ~/.gitconfig
+# Linux only: symlink platform overrides
+ln -s ~/Developer/configs/git/gitconfig.linux ~/.gitconfig.local
 ```
 
 ## ⚙️ Configuration
@@ -65,14 +66,24 @@ Uses merge strategy for `git pull` instead of rebase.
 
 Disables pager for `log`, `diff`, and `branch` commands, showing full output directly in the terminal.
 
-### Credential Helper (macOS)
+### Credential Helper
 
+The main `.gitconfig` leaves `credential.helper` empty and includes `~/.gitconfig.local` for platform-specific overrides.
+
+**macOS** — add to `~/.gitconfig.local`:
 ```ini
 [credential]
     helper = osxkeychain
 ```
 
-Uses macOS Keychain to securely store Git credentials.
+**Linux** — symlink the provided example:
+```bash
+ln -s ~/Developer/configs/git/gitconfig.linux ~/.gitconfig.local
+```
+This uses `git-credential-libsecret` (GNOME Keyring / KWallet). Install it on Debian/Ubuntu:
+```bash
+sudo apt install libsecret-1-dev git-credential-libsecret
+```
 
 ## 🔧 Customization
 

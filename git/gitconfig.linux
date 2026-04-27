@@ -1,0 +1,9 @@
+# Linux-specific git overrides
+# Symlink or copy to ~/.gitconfig.local on Linux machines.
+# The main .gitconfig includes this file via: [include] path = ~/.gitconfig.local
+
+[credential]
+	# libsecret integrates with GNOME Keyring / KWallet
+	# Install on Debian/Ubuntu: sudo apt install libsecret-1-dev git-credential-libsecret
+	# Build if needed: sudo make -C /usr/share/doc/git/contrib/credential/libsecret
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret

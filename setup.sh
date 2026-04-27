@@ -34,5 +34,10 @@ link "$REPO/terminal/ghostty.config"   "$HOME/.config/ghostty/config"
 link "$REPO/terminal/tmux.conf"        "$HOME/.config/tmux/tmux.conf"
 link "$REPO/git/.gitconfig"            "$HOME/.gitconfig"
 
+# On Linux, symlink the platform-specific credential helper config
+if [ "$(uname)" != "Darwin" ]; then
+  link "$REPO/git/gitconfig.linux" "$HOME/.gitconfig.local"
+fi
+
 echo ""
 echo "Done. Open a new shell to apply changes."

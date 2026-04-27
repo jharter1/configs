@@ -1,5 +1,10 @@
 # Homebrew (must come first so pyenv/rbenv/starship are on PATH)
-fish_add_path /opt/homebrew/bin /opt/homebrew/sbin
+# macOS ARM: /opt/homebrew  |  Linux: /home/linuxbrew/.linuxbrew
+if test (uname) = "Darwin"
+    fish_add_path /opt/homebrew/bin /opt/homebrew/sbin
+else if test -d /home/linuxbrew/.linuxbrew
+    fish_add_path /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin
+end
 
 # Autosuggestion color: #6272a4 (Dracula comment purple) stands out against
 # the transparent background better than the default dark gray (555 brblack).
@@ -20,9 +25,15 @@ if status is-interactive
     abbr -a ... 'cd ../..'
     abbr -a .... 'cd ../../..'
 
-    # macOS-specific conveniences
+    # Package manager update shortcut
     abbr -a brewup 'brew update && brew upgrade && brew cleanup'
-    abbr -a o 'open .'  # Open current dir in Finder
+
+    # Open current directory in file manager (platform-aware)
+    if test (uname) = "Darwin"
+        abbr -a o 'open .'
+    else
+        abbr -a o 'xdg-open .'
+    end
 
     # Quick edit config
     abbr -a fishconfig '$EDITOR ~/.config/fish/config.fish'
@@ -74,9 +85,19 @@ end
 
 starship init fish | source
 
-# Lazy-load optional integrations only if needed
-test -f /opt/homebrew/share/google-cloud-sdk/path.fish.inc; and functions -q __init_gcloud; or function __init_gcloud; . /opt/homebrew/share/google-cloud-sdk/path.fish.inc; functions --erase __init_gcloud; end
-abbr -a gcloud '__init_gcloud; gcloud'
+# Lazy-load gcloud SDK (checks macOS Homebrew and Linux Homebrew paths)
+set -l _gcloud_fish_inc ""
+if test -f /opt/homebrew/share/google-cloud-sdk/path.fish.inc
+    set _gcloud_fish_inc /opt/homebrew/share/google-cloud-sdk/path.fish.inc
+else if test -f /home/linuxbrew/.linuxbrew/share/google-cloud-sdk/path.fish.inc
+    set _gcloud_fish_inc /home/linuxbrew/.linuxbrew/share/google-cloud-sdk/path.fish.inc
+end
+if test -n "$_gcloud_fish_inc"
+    function __init_gcloud
+        . $_gcloud_fish_inc; functions --erase __init_gcloud
+    end
+    abbr -a gcloud '__init_gcloud; gcloud'
+end
 
 set PATH $PATH $HOME/.local/bin
 set -gx NOMAD_ADDR http://10.0.0.50:4646

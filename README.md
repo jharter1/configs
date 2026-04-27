@@ -1,6 +1,6 @@
 # dotfiles
 
-My personal development environment configuration files for macOS, organized for easy management and portability.
+My personal development environment configuration files for macOS and Linux, organized for easy management and portability.
 
 ## 📁 Structure
 
@@ -97,7 +97,7 @@ See individual README files for detailed setup instructions.
 
 ## 🛠️ Requirements
 
-- macOS (primary target)
+- macOS or Linux (Ubuntu/Debian recommended for Linux)
 - Neovim 0.9+ (for lua configs)
 - Fish 3.0+ or Zsh 5.0+
 - Git 2.0+
