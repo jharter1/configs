@@ -1,0 +1,64 @@
+name: Linux Compatibility
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+    branches: [main]
+jobs:
+  symlinks:
+    name: Symlink Setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup.sh
+        run: bash setup.sh
+      - name: Verify symlinks
+        run: |
+          fail=0
+          check() { [ -L "$1" ] && echo "✓ $1" || { echo "✗ $1 (not a symlink)"; fail=1; }; }
+          check "$HOME/.config/nvim"
+          check "$HOME/.config/fish"
+          check "$HOME/.config/omf"
+          check "$HOME/.config/starship.toml"
+          check "$HOME/.config/ghostty/config"
+          check "$HOME/.config/tmux/tmux.conf"
+          check "$HOME/.gitconfig"
+          exit $fail
+  fish:
+    name: Fish Config Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install fish
+        run: sudo apt-get update -qq && sudo apt-get install -y fish
+      - name: Validate config.fish
+        run: fish --no-execute shell/fish/config.fish
+      - name: Validate functions and conf.d
+        run: |
+          fail=0
+          for f in shell/fish/functions/*.fish shell/fish/conf.d/*.fish; do
+            fish --no-execute "$f" && echo "✓ $f" || { echo "✗ $f"; fail=1; }
+          done
+          exit $fail
+  tmux:
+    name: Tmux Config Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tmux
+        run: sudo apt-get update -qq && sudo apt-get install -y tmux
+      - name: Validate tmux.conf (TPM-free)
+        run: |
+          # Strip plugin/run lines that require TPM to be installed
+          grep -v '^\s*set -g @plugin\|^\s*run\b' terminal/tmux.conf > /tmp/tmux-lint.conf
+          tmux -f /tmp/tmux-lint.conf new-session -d -s lint
+          tmux kill-server 2>/dev/null || true
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+      - name: Check setup.sh
+        run: shellcheck setup.sh
