@@ -10,7 +10,7 @@
 	rebase = false
 [core]
 	pager = delta
-	excludesfile = /Users/jackharter/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [interactive]
 	diffFilter = delta --color-only
 [delta]
@@ -21,7 +21,10 @@
 [merge]
 	conflictstyle = diff3
 [credential]
-	helper = osxkeychain
+    # Platform-specific override via ~/.gitconfig.local
+    helper =
+[include]
+    path = ~/.gitconfig.local
 [push]
 	default = current
 [alias]
