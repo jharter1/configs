@@ -58,6 +58,11 @@ return {
 			-- YAML LSP
 			vim.lsp.config("yamlls", {
 				single_file_support = true,
+				settings = {
+					yaml = {
+						validate = false,
+					},
+				},
 			})
 
 			-- Docker LSP

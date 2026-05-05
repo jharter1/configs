@@ -22,7 +22,9 @@
       "Bash(ln -s ~/Developer/configs/shell/omf ~/.config/omf)",
       "Bash(rm ~/.config/starship.toml)",
       "Bash(rm -rf ~/.config/fish)",
-      "Bash(ln -s ~/Developer/configs/shell/fish ~/.config/fish)"
+      "Bash(ln -s ~/Developer/configs/shell/fish ~/.config/fish)",
+      "WebFetch(domain:starship.rs)",
+      "Bash(python3 *)"
     ]
   }
 }

@@ -4,15 +4,15 @@
 
 add_newline = true
 
-# Language/cloud context on the right — only renders in relevant project directories
-right_format = "$docker_context$kubernetes$aws$ruby$python$nodejs$golang$rust$package$battery$time"
+# Language/tool context on the right — only renders in relevant project directories
+right_format = "$docker_context$ruby$python$nodejs$golang$rust$package"
 
 scan_timeout = 10
 command_timeout = 500
 
 format = """
-[╭─ ](bold cyan)$username$hostname$sudo$jobs$shlvl
-[├─ ](bold cyan)$directory $git_branch$git_state$git_status$git_commit
+[╭─ ](bold cyan)$username$hostname$sudo$jobs$shlvl${fill}$battery$time
+[├─ ](bold cyan)$directory $git_branch$git_state$git_status$git_commit${fill}$kubernetes$aws$azure
 [╰─❯ ](bold cyan)$status$cmd_duration$character"""
 
 # ── Line 1: Identity ──────────────────────────────────────────────────────────
@@ -44,7 +44,7 @@ style = "bold yellow"
 disabled = false
 format = "[$user](bold purple)"
 show_always = true
-aliases = { "jackharter" = "🦑 jwh" }
+aliases = { "jackharter" = "\uF2AC jwh" }
 
 [hostname]
 disabled = false
@@ -175,12 +175,12 @@ only_with_files = true
 [aws]
 disabled = false
 symbol = "\uF0C2 "
-format = '[$symbol$profile(\($region\))]($style) '
+format = '[$symbol$profile(\($region\))( \[$duration\])]($style) '
 style = "bold yellow"
 
 [kubernetes]
 symbol = "\uE81D "
-format = '[$symbol$context( \($namespace\))](dimmed cyan) '
+format = '[$symbol$context](dimmed cyan) '
 disabled = false
 
 # ── Right: Utilities ──────────────────────────────────────────────────────────
@@ -203,11 +203,16 @@ format = "[\uF017 $time]($style)"
 time_format = "%H:%M"
 style = "bold green"
 
+[fill]
+symbol = " "
+
 [terraform]
 disabled = true
 
 [azure]
-disabled = true
+disabled = false
+format = '[$symbol$subscription]($style) '
+style = "bold #0078D4"
 
 [gcloud]
 disabled = true
