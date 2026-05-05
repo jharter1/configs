@@ -44,7 +44,7 @@ style = "bold yellow"
 disabled = false
 format = "[$user](bold purple)"
 show_always = true
-aliases = { "jackharter" = "\uF2AC jwh" }
+aliases = { "jackharter" = "\uF1BF jwh" }
 
 [hostname]
 disabled = false
