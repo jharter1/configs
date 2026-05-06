@@ -27,6 +27,7 @@ return {
 					"bashls",        -- Bash
 					"dockerls",      -- Dockerfile
 					"ruby_lsp",      -- Ruby
+					"helm_ls",       -- Helm
 				},
 			})
 		end,
@@ -55,12 +56,26 @@ return {
 				capabilities = require("cmp_nvim_lsp").default_capabilities(),
 			})
 
-			-- YAML LSP
+			-- YAML LSP (excluded from Helm templates — helm_ls handles those)
 			vim.lsp.config("yamlls", {
 				single_file_support = true,
+				filetypes = { "yaml", "yaml.docker-compose" },
 				settings = {
 					yaml = {
 						validate = false,
+					},
+				},
+			})
+
+			-- Helm LSP
+			vim.lsp.config("helm_ls", {
+				single_file_support = true,
+				filetypes = { "helm" },
+				settings = {
+					["helm-ls"] = {
+						yamlls = {
+							enabled = false,
+						},
 					},
 				},
 			})
@@ -179,6 +194,7 @@ return {
 				"bashls",
 				"dockerls",
 				"ruby_lsp",
+				"helm_ls",
 			}
 
 			for _, server in ipairs(servers) do

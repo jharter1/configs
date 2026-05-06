@@ -7,12 +7,12 @@ add_newline = true
 # Language/tool context on the right — only renders in relevant project directories
 right_format = "$docker_context$ruby$python$nodejs$golang$rust$package"
 
-scan_timeout = 10
+scan_timeout = 30
 command_timeout = 500
 
 format = """
 [╭─ ](bold cyan)$username$hostname$sudo$jobs$shlvl${fill}$battery$time
-[├─ ](bold cyan)$directory $git_branch$git_state$git_status$git_commit${fill}$kubernetes$aws$azure
+[├─ ](bold cyan)$directory $git_branch$git_state$git_status$git_metrics$git_commit${fill}$kubernetes$aws$azure
 [╰─❯ ](bold cyan)$status$cmd_duration$character"""
 
 # ── Line 1: Identity ──────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ style = "bold blue"
 [shlvl]
 disabled = false
 threshold = 2
-symbol = "\uF126 "
+symbol = "\uF149 "
 format = " [$symbol$shlvl]($style)"
 style = "bold yellow"
 
@@ -97,7 +97,7 @@ disabled = false
 only_detached = true
 
 [git_metrics]
-disabled = true
+disabled = false
 added_style = "bold green"
 deleted_style = "bold red"
 format = "[+$added]($added_style)/[-$deleted]($deleted_style)"

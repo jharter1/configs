@@ -1,3 +1,11 @@
+-- Detect Helm template files (yaml/tpl files inside a templates/ dir)
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+	pattern = { "**/templates/*.yaml", "**/templates/*.yml", "**/templates/*.tpl" },
+	callback = function()
+		vim.bo.filetype = "helm"
+	end,
+})
+
 -- Flash yanked region so you can see what was copied
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
