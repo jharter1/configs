@@ -32,10 +32,10 @@ end
 
 # Better ls with eza (install with: brew install eza)
 if command -v eza > /dev/null
-    alias ls='eza --icons'
-    alias ll='eza -l --icons'
-    alias la='eza -la --icons'
-    alias lt='eza --tree --level=2 --icons'
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -l --icons --group-directories-first'
+    alias la='eza -la --icons --group-directories-first'
+    alias lt='eza --tree --level=2 --icons --group-directories-first'
 end
 
 # Fast directory jumping with zoxide (install with: brew install zoxide)

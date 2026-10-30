@@ -215,16 +215,23 @@ style = "muted"
 disabled = false
 only_with_files = true
 
+# Only when a profile is active (AWS_PROFILE etc.); a bare default region isn't worth showing
 [aws]
 disabled = false
-symbol = "\uF0C2 "
-format = '[$symbol$profile(\($region\))( \[$duration\])]($style) '
+format = "([\uF0C2 $profile( \\[$duration\\])]($style) )"
 style = "muted"
 
+# Only in folders that look like Kubernetes work; production contexts turn red
 [kubernetes]
 symbol = "\uE81D "
-format = '[$symbol$context](muted) '
+format = '[$symbol$context]($style) '
+style = "muted"
 disabled = false
+detect_files = ["Chart.yaml", "kustomization.yaml", "helmfile.yaml", "skaffold.yaml", "Tiltfile"]
+detect_folders = ["k8s", "manifests", "charts", "helm", "kustomize"]
+contexts = [
+    { context_pattern = ".*(prod|production|prd).*", style = "bold red" },
+]
 
 # ── Right: Utilities ──────────────────────────────────────────────────────────
 
@@ -287,7 +294,7 @@ style = "frame"
 disabled = true
 
 [azure]
-disabled = false
+disabled = true
 format = '[$symbol$subscription]($style) '
 style = "muted"
 

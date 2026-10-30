@@ -56,7 +56,7 @@ Fish is the primary shell (Zsh deprecated). Fisher manages plugins via `fish_plu
 ## Git (`git/`)
 
 - Pull strategy: merge (not rebase)
-- Pager disabled for `log`, `diff`, `branch` (direct terminal output)
+- delta is the pager for all git output (`ansi` syntax theme, so it follows Tokyo Night)
 - Git LFS enabled
 - macOS keychain credential helper
 

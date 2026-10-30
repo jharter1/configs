@@ -22,7 +22,8 @@ brew install tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Symlink configuration
-ln -s ~/Developer/configs/terminal/.tmux.conf ~/.tmux.conf
+mkdir -p ~/.config/tmux
+ln -s ~/Developer/configs/terminal/tmux.conf ~/.config/tmux/tmux.conf
 
 # Start tmux and install plugins
 tmux
