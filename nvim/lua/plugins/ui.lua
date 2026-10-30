@@ -58,6 +58,37 @@ return {
 		lazy = false,
 		opts = {
 			bigfile = { enabled = true },
+			-- Start screen when nvim opens with no file
+			dashboard = {
+				enabled = true,
+				preset = {
+					header = [[
+     ██╗ ██╗    ██╗ ██╗  ██╗
+     ██║ ██║    ██║ ██║  ██║
+     ██║ ██║ █╗ ██║ ███████║
+██   ██║ ██║███╗██║ ██╔══██║
+╚█████╔╝ ╚███╔███╔╝ ██║  ██║
+ ╚════╝   ╚══╝╚══╝  ╚═╝  ╚═╝]],
+					-- stylua: ignore
+					keys = {
+						{ icon = " ", key = "f", desc = "Find file", action = ":lua Snacks.dashboard.pick('files')" },
+						{ icon = " ", key = "g", desc = "Grep text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+						{ icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+						{ icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
+						{ icon = " ", key = "e", desc = "File tree", action = ":NvimTreeOpen" },
+						{ icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+						{ icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy" },
+						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+					},
+				},
+				sections = {
+					{ section = "header", padding = 1 },
+					{ section = "keys", gap = 1, padding = 1 },
+					{ icon = " ", title = "Recent in this project", section = "recent_files", cwd = true, limit = 5, indent = 2, padding = 1 },
+					{ icon = " ", title = "Projects", section = "projects", limit = 5, indent = 2, padding = 1 },
+					{ section = "startup" },
+				},
+			},
 			notifier = { enabled = true },
 			quickfile = { enabled = true },
 			words = { enabled = true },

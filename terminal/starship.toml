@@ -74,10 +74,13 @@ format = "[@$hostname]($style)"
 
 [directory]
 truncation_symbol = "…/"
-truncation_length = 3
+truncation_length = 4
 home_symbol = "~"
 style = "bold blue"
 format = "[\uEA83 $path]($style)[$read_only]($read_only_style)"
+# Inside a git repo, start the path at the repo root and highlight its name
+repo_root_style = "bold cyan"
+repo_root_format = "[\uEA62 ]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)"
 read_only = " \uF023"
 read_only_style = "bold red"
 
