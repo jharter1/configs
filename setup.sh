@@ -14,6 +14,34 @@ ALL=false
 
 step() { printf '\n\033[34m==>\033[0m %s\n' "$1"; }
 
+# GitHub over SSH: the linked .gitconfig sends all github.com URLs through SSH,
+# so pulls/pushes need a key GitHub knows about. Warn (don't fail) if missing.
+SSH_OK=false
+check_ssh() {
+  # GitHub exits 1 even on success, so capture first and match the greeting
+  local out
+  out="$(ssh -T -o BatchMode=yes -o ConnectTimeout=5 -o StrictHostKeyChecking=accept-new \
+           git@github.com 2>&1 || true)"
+  if grep -q "successfully authenticated" <<<"$out"; then
+    SSH_OK=true
+    echo "ok    GitHub SSH works"
+  else
+    printf '\033[33mwarn\033[0m  GitHub SSH is not set up yet. Setup continues, but git pull/push will fail until it is.\n'
+  fi
+}
+
+ssh_instructions() {
+  cat <<'EOF'
+
+  Set up GitHub SSH:
+    ssh-keygen -t ed25519 -C "you@example.com"   # accept the default path; set a passphrase
+    ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+    gh auth login                                 # choose SSH; it offers to upload the key
+  Check it:
+    ssh -T git@github.com                         # "Hi <user>! You've successfully authenticated"
+EOF
+}
+
 link() {
   local src="$1"
   local dst="$2"
@@ -34,6 +62,10 @@ link() {
   ln -s "$src" "$dst"
   echo "link  $dst -> $src"
 }
+
+step "GitHub SSH"
+check_ssh
+$SSH_OK || ssh_instructions
 
 # ── 1. Packages ──────────────────────────────────────────────────────────────
 if $ALL; then
@@ -81,6 +113,11 @@ fi
 
 # ── Done ─────────────────────────────────────────────────────────────────────
 step "Done"
+if ! $SSH_OK; then
+  printf '\033[33m!!\033[0m    GitHub SSH still is not set up. Do this first:\n'
+  ssh_instructions
+  echo
+fi
 if $ALL; then
   cat <<'EOF'
 Remaining one-time steps:
@@ -88,7 +125,7 @@ Remaining one-time steps:
        echo "$(command -v fish)" | sudo tee -a /etc/shells
        chsh -s "$(command -v fish)"
   2. Open Ghostty (or reload with cmd+shift+,) to pick up the theme and font.
-  3. gh auth login            # GitHub CLI + SSH key upload
+  3. gh auth login            # GitHub CLI (and SSH key upload, if not done)
   4. Machine-specific git settings (email, credential helper) go in ~/.gitconfig.local
 EOF
 else

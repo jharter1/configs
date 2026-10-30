@@ -18,11 +18,20 @@ That does everything in order:
 2. **Symlinks:** every config into `~/.config` (anything already there is backed up as `*.bak.<timestamp>`)
 3. **Plugins:** Fisher (fish), TPM (tmux), Lazy.nvim (Neovim)
 
+**GitHub SSH is expected.** The linked `.gitconfig` sends every github.com URL over SSH. `setup.sh` checks for a working key first. If there isn't one, it keeps going (plugins install over https), but it prints how to set one up at the start and again at the end:
+
+```bash
+ssh-keygen -t ed25519 -C "you@example.com"
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+gh auth login        # choose SSH; it offers to upload the key
+ssh -T git@github.com   # should greet you by username
+```
+
 Then four one-time steps, which the script prints at the end too:
 
 ```bash
 echo "$(command -v fish)" | sudo tee -a /etc/shells && chsh -s "$(command -v fish)"  # fish as login shell
-gh auth login                    # GitHub CLI + SSH key
+gh auth login                    # GitHub CLI (uploads your SSH key if you haven't)
 ```
 
 - Open Ghostty, or reload it with `cmd+shift+,`, to pick up the theme and font.
@@ -30,7 +39,7 @@ gh auth login                    # GitHub CLI + SSH key
 
 **Only want the symlinks?** Run `./setup.sh` with no flag. It's safe to re-run at any time; existing links are skipped.
 
-**Updating:** `git pull && ./setup.sh --all` installs anything new from the Brewfile and syncs plugins. Once `.gitconfig` is linked, GitHub URLs go over SSH, so run `gh auth login` before your first `git pull`.
+**Updating:** `git pull && ./setup.sh --all` installs anything new from the Brewfile and syncs plugins. Needs the GitHub SSH key above.
 
 ## ✨ What you get
 
