@@ -16,13 +16,14 @@ function __notify_long_on_postexec --on-event fish_postexec
     set -l took (math --scale=0 $secs / 60)m(math $secs % 60)s
     test $secs -lt 60; and set took {$secs}s
 
+    # Silent on success; only failures make a sound
     if test $code -eq 0
         set -f title "✓ Finished in $took"
+        set -f script 'display notification (item 1 of argv) with title (item 2 of argv)'
     else
         set -f title "✘ Failed ($code) after $took"
+        set -f script 'display notification (item 1 of argv) with title (item 2 of argv) sound name "Basso"'
     end
-    osascript -e 'on run argv' \
-        -e 'display notification (item 1 of argv) with title (item 2 of argv) sound name "Glass"' \
-        -e 'end run' -- $argv[1] $title &>/dev/null &
+    osascript -e 'on run argv' -e $script -e 'end run' -- $argv[1] $title &>/dev/null &
     disown 2>/dev/null
 end

@@ -29,7 +29,7 @@ brew install bat
 ln -s ~/Developer/configs/tools/bat ~/.config/bat
 ```
 
-Theme is Dracula to match delta and fzf. Add `--map-syntax` lines to
+Theme is `ansi`, so it follows the terminal colours (Tokyo Night). Add `--map-syntax` lines to
 `config` for files bat can't identify by name.
 
 ## 🔧 GitHub CLI (`gh`)

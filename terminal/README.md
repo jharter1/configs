@@ -34,7 +34,7 @@ tmux
 - **Custom Prefix**: `Ctrl-s` (instead of default `Ctrl-b`)
 - **Live Reload**: `Ctrl-s + r` to reload configuration
 - **Mouse Support**: Enabled for scrolling and pane selection
-- **Status Bar**: Top position with Dracula theme
+- **Status Bar**: Top position, minimal, in ANSI colours (follows the terminal theme)
 - **256 Color Support**: Full color terminal
 
 ### Plugins
@@ -42,21 +42,15 @@ tmux
 Managed via [TPM](https://github.com/tmux-plugins/tpm):
 
 - **tmux-sensible** - Sensible default settings
-- **tmux-battery** - Battery status display
 - **tmux-resurrect** - Save/restore sessions
 - **tmux-continuum** - Automatic session saving
-- **dracula/tmux** - Dracula color theme
+- **tmux-sessionx** - fzf session switcher (`Ctrl-s + o`)
 
-### Dracula Status Bar
+### Status Bar
 
-Shows:
-- Git status
-- Network bandwidth (on `en0` interface)
-- Battery level
-- CPU usage
-- RAM usage
-- Weather
-- Time
+Deliberately quiet: session name, then the window list (current window in
+bold). `prefix` appears on the right only while the prefix key is held. Git,
+battery and time already live in the Starship prompt, so they aren't repeated.
 
 ### Plugin Management
 
@@ -182,8 +176,10 @@ source ~/.zshrc                     # Zsh
 
 ## 🎨 Color Schemes
 
-- **Tmux**: Dracula theme
-- **Starship**: Custom colors (green, purple, yellow, red)
+Tokyo Night everywhere, following macOS appearance: Ghostty uses
+`TokyoNight Moon` in dark mode and `TokyoNight Day` in light mode. tmux,
+Starship, fish, fzf, bat and delta use ANSI colour names instead of hex, so
+they switch with it. Neovim uses tokyonight.nvim (moon / day).
 
 ## 💡 Tips
 
@@ -266,6 +262,5 @@ eval "$(starship init zsh)"
 
 - [Tmux Manual](https://man.openbsd.org/tmux.1)
 - [TPM Documentation](https://github.com/tmux-plugins/tpm)
-- [Dracula Tmux Theme](https://draculatheme.com/tmux)
 - [Starship Documentation](https://starship.rs/)
 - [Starship Configuration](https://starship.rs/config/)

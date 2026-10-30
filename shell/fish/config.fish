@@ -1,9 +1,9 @@
 # Homebrew (must come first so pyenv/rbenv/starship are on PATH)
 fish_add_path /opt/homebrew/bin /opt/homebrew/sbin
 
-# Autosuggestion color: #6272a4 (Dracula comment purple) stands out against
-# the transparent background better than the default dark gray (555 brblack).
-set --global fish_color_autosuggestion '#6272a4'
+# Autosuggestion color: ANSI 7, a soft grey-blue in Tokyo Night that follows
+# light/dark and reads better on the translucent background than brblack.
+set --global fish_color_autosuggestion white
 
 if status is-interactive
     # Quick shortcuts (abbreviations expand as you type)
@@ -58,7 +58,7 @@ if command -v fzf > /dev/null
     end
     # Better preview with bat
     set -gx FZF_CTRL_T_OPTS "--preview 'bat --color=always --style=header,grid --line-range :100 {}'"
-    set -gx FZF_DEFAULT_OPTS "--color=bg+:#282a36,bg:#44475a,spinner:#f8f8f2,hl:#bd93f9,fg:#f8f8f2,header:#bd93f9,info:#8be9fd,pointer:#8be9fd,marker:#8be9fd,fg+:#f8f8f2,prompt:#bd93f9,hl+:#bd93f9 --border=rounded --prompt='🔍 ' --pointer='▶' --marker='✓'"
+    set -gx FZF_DEFAULT_OPTS "--color=fg:-1,bg:-1,fg+:-1:bold,bg+:-1,hl:blue,hl+:blue,info:white,prompt:blue,pointer:magenta,marker:magenta,spinner:white,header:white,border:bright-black,gutter:-1 --border=rounded --prompt='🔍 ' --pointer='▶' --marker='✓'"
     # Initialize fzf key bindings
     fzf --fish | source
 end

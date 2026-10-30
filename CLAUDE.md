@@ -35,7 +35,7 @@ Three-tier Lua structure:
 
 **Keymaps** — Leader is `<Space>`. All custom mappings require a `desc` property for which-key discoverability.
 
-**Color scheme** — Tokyo Night (`tokyonight-night`). UI plugins (lualine, bufferline, etc.) should use it.
+**Color scheme** — Tokyo Night (Moon, Day in light mode). UI plugins (lualine, bufferline, etc.) should use it. Outside nvim, configs use ANSI colour names rather than hex so they follow Ghostty's light/dark theme.
 
 ## Shell (`shell/fish/`)
 
@@ -49,7 +49,7 @@ Fish is the primary shell (Zsh deprecated). Fisher manages plugins via `fish_plu
 
 ## Terminal (`terminal/`)
 
-- **tmux:** Custom prefix `C-s`, 1-indexed windows, Dracula theme via TPM. Install plugins with `<prefix>I`, update with `<prefix>U`.
+- **tmux:** Custom prefix `C-s`, 1-indexed windows, minimal status bar in ANSI colours (follows Ghostty's Tokyo Night light/dark). Install plugins with `<prefix>I`, update with `<prefix>U`.
 - **starship:** Multi-line prompt with git, Docker, k8s, Terraform contexts.
 - **ghostty:** GPU-accelerated terminal.
 

@@ -4,7 +4,14 @@ return {
 	{
 		"folke/tokyonight.nvim",
 		priority = 1000,
-		opts = { style = "moon" },
+		opts = {
+			style = "moon",
+			light_style = "day", -- used when nvim detects a light terminal background
+			on_highlights = function(hl, c)
+				-- Keep the dashboard header quiet
+				hl.SnacksDashboardHeader = { fg = c.comment }
+			end,
+		},
 	},
 
 	-- Status line

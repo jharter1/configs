@@ -45,7 +45,7 @@ Fish shell (deprecated Zsh in favor of Fish) managed by Fisher plugin manager:
 **Do NOT modify** conda/pyenv initialization blocks marked with auto-managed comments.
 
 ### Terminal Tools (`terminal/`)
-- **tmux.conf:** Custom prefix `C-s`, 1-indexed windows, Dracula theme via TPM
+- **tmux.conf:** Custom prefix `C-s`, 1-indexed windows, minimal ANSI-colour status bar (follows Tokyo Night light/dark)
 - **starship.toml:** Multi-line prompt with git, Docker, k8s, Terraform contexts
 - **ghostty.config:** GPU-accelerated terminal config
 

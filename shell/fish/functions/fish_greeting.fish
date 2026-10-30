@@ -15,9 +15,10 @@ function fish_greeting
     set -l boot (sysctl -n kern.boottime | string match -r 'sec = (\d+)')[2]
     set -l days (math --scale=0 "($(date +%s) - $boot) / 86400")
 
-    set_color yellow; echo -n "$icon "
-    set_color --bold magenta; echo -n "Good $part, jwh"
-    set_color normal; set_color brblack
+    # Muted to match the prompt frame; only the greeting itself is brighter
+    set_color white; echo -n "$icon "
+    set_color normal; echo -n "Good $part, jwh"
+    set_color white
     echo -n " · "(date '+%a %d %b')
     test -n "$battery"; and echo -n " · 󰁹 $battery"
     echo " · 󰐥 up $days"d
