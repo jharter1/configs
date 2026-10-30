@@ -1,7 +1,7 @@
 # bat config (symlinked to ~/.config/bat/config)
 # "ansi" uses the terminal's own colours, so it follows Ghostty's light/dark theme
 --theme="ansi"
---style="numbers,changes,header"
+--style="default"          # changes, grid, header-filename, numbers, snip
 --italic-text=always
 
 # Repo files bat can't guess from the name
