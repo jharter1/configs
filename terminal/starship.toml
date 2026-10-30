@@ -5,14 +5,14 @@
 add_newline = true
 
 # Language/tool context on the right — only renders in relevant project directories
-right_format = "$docker_context$ruby$python$nodejs$golang$rust$package"
+right_format = "$docker_context$ruby$python$nodejs$golang$rust$package$kubernetes$aws$azure"
 
 scan_timeout = 30
 command_timeout = 500
 
 format = """
-[╭─ ](bold cyan)$username$hostname$sudo$jobs$shlvl${fill}$battery$time
-[├─ ](bold cyan)$directory $git_branch$git_state$git_status$git_metrics$git_commit${fill}$kubernetes$aws$azure
+[╭─ ](bold cyan)$username$hostname$sudo$jobs$shlvl$memory_usage${custom.vpn} ${fill} ${custom.uptime}$battery${custom.daytime}$time[ ─╮](bold cyan)
+[├─ ](bold cyan)$directory $git_branch${custom.git_age}$git_state$git_status$git_metrics$git_commit
 [╰─❯ ](bold cyan)$status$cmd_duration$character"""
 
 # ── Line 1: Identity ──────────────────────────────────────────────────────────
@@ -39,6 +39,24 @@ threshold = 2
 symbol = "\uF149 "
 format = " [$symbol$shlvl]($style)"
 style = "bold yellow"
+
+# Only appears under memory pressure
+[memory_usage]
+disabled = false
+threshold = 75
+symbol = "\U000F035B "             # 󰍛
+format = " [$symbol$ram_pct]($style)"
+style = "bold dimmed red"
+
+# Only appears while a VPN (Tailscale, NordVPN, …) is connected
+[custom.vpn]
+when = true
+shell = ["sh"]
+command = """
+name=$(scutil --nc list | sed -n 's/^\\* (Connected)[^"]*"\\([^ "]*\\).*/\\1/p' | head -1)
+[ -n "$name" ] && echo "\U000F0582 $name" """    # 󰖂
+style = "bold green"
+format = "( [$output]($style))"
 
 [username]
 disabled = false
@@ -69,6 +87,23 @@ style = "bold purple"
 format = 'on [$symbol$branch]($style) '
 truncation_length = 28
 truncation_symbol = "…"
+
+# Time since last commit (5m, 3h, 2d, 6w), next to the branch
+[custom.git_age]
+require_repo = true
+when = true
+shell = ["sh"]
+command = """
+ct=$(git log -1 --format=%ct 2>/dev/null) || exit 0
+d=$(( $(date +%s) - ct ))
+if   [ $d -lt 3600 ];   then echo "$((d / 60))m"
+elif [ $d -lt 86400 ];  then echo "$((d / 3600))h"
+elif [ $d -lt 604800 ]; then echo "$((d / 86400))d"
+else                         echo "$((d / 604800))w"
+fi"""
+symbol = "\U000F02DA "             # 󰋚
+style = "dimmed white"
+format = "[$symbol$output]($style) "
 
 # Shows MERGING / REBASING / CHERRY-PICKING etc.
 [git_state]
@@ -185,26 +220,60 @@ disabled = false
 
 # ── Right: Utilities ──────────────────────────────────────────────────────────
 
-# Only shown when battery drops below 30%; no always-on green entry
+# Always shown; icon fills/drains with charge level, colour shifts as it drops
 [battery]
 disabled = false
-charging_symbol = "\uF0E7 "
-discharging_symbol = "\uF244 "
+full_symbol = "\U000F0079 "          # 󰁹
+charging_symbol = "\U000F0084 "      # 󰂄
+discharging_symbol = "\U000F007E "   # 󰁾
+unknown_symbol = "\U000F06A5 "       # 󰚥 plugged in, holding charge
+empty_symbol = "\U000F008E "         # 󰂎
 format = "[$symbol$percentage]($style) "
 display = [
-    { threshold = 15, style = "bold red" },
-    { threshold = 30, style = "bold yellow" },
+    { threshold = 10, style = "bold red", discharging_symbol = "\U000F008E " },
+    { threshold = 20, style = "bold red", discharging_symbol = "\U000F007A " },
+    { threshold = 40, style = "bold yellow", discharging_symbol = "\U000F007C " },
+    { threshold = 60, style = "yellow", discharging_symbol = "\U000F007E " },
+    { threshold = 80, style = "green", discharging_symbol = "\U000F0080 " },
+    { threshold = 100, style = "bold green", discharging_symbol = "\U000F0082 " },
 ]
+
+# Clock icon follows the day: sunrise, sun, sunset, moon
+[custom.daytime]
+when = true
+shell = ["sh"]
+command = """
+h=$(date +%H)
+if   [ $h -ge 5 ]  && [ $h -lt 9 ];  then echo "\U000F059C"
+elif [ $h -ge 9 ]  && [ $h -lt 17 ]; then echo "\U000F0599"
+elif [ $h -ge 17 ] && [ $h -lt 21 ]; then echo "\U000F059B"
+else                                     echo "\U000F0594"
+fi"""
+style = "bold yellow"
+format = "[$output ]($style)"
+
+# Nudge to reboot: only appears after a week of uptime
+[custom.uptime]
+when = true
+shell = ["sh"]
+command = """
+boot=$(sysctl -n kern.boottime | sed 's/^{ sec = \\([0-9]*\\).*/\\1/')
+d=$(( ($(date +%s) - boot) / 86400 ))
+[ $d -ge 7 ] && echo "\U000F0425 up ${d}d" """    # 󰐥
+style = "dimmed yellow"
+format = "([$output]($style) )"
 
 [time]
 disabled = false
 use_12hr = false
-format = "[\uF017 $time]($style)"
+format = "[$time]($style)"
 time_format = "%H:%M"
 style = "bold green"
 
+# Draws the rule across the top line, joining the ╭─ frame to the ─╮ corner
 [fill]
-symbol = " "
+symbol = "─"
+style = "cyan"
 
 [terraform]
 disabled = true
