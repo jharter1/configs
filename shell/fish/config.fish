@@ -75,6 +75,16 @@ end
 
 starship init fish | source
 
+# Transient prompt: once a command runs, its full prompt collapses to a faint
+# "❯ command" with the time it ran on the right, so scrollback reads cleanly
+function starship_transient_prompt_func
+    set_color white; echo -n '❯ '; set_color normal
+end
+function starship_transient_rprompt_func
+    set_color brblack; date +%H:%M; set_color normal
+end
+enable_transience
+
 # Lazy-load optional integrations only if needed
 test -f /opt/homebrew/share/google-cloud-sdk/path.fish.inc; and functions -q __init_gcloud; or function __init_gcloud; . /opt/homebrew/share/google-cloud-sdk/path.fish.inc; functions --erase __init_gcloud; end
 abbr -a gcloud '__init_gcloud; gcloud'

@@ -23,6 +23,8 @@ jobs:
           check "$HOME/.config/ghostty/config"
           check "$HOME/.config/tmux/tmux.conf"
           check "$HOME/.gitconfig"
+          check "$HOME/.config/tmuxinator"
+          check "$HOME/.config/bat"
           exit $fail
   fish:
     name: Fish Config Syntax

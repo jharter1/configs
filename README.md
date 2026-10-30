@@ -1,109 +1,115 @@
 # dotfiles
 
-My personal development environment configuration files for macOS, organized for easy management and portability.
+A quiet, Tokyo Night–themed macOS terminal setup: Ghostty, fish, Starship, tmux and Neovim.
+Built on the idea that the computer isn't the thing, it's how you get to the thing.
+Colour only shows up when something needs your attention.
+
+## 🚀 New machine in one command
+
+Needs [Homebrew](https://brew.sh) (which also installs the Xcode command-line tools).
+
+```bash
+git clone https://github.com/jharter1/configs.git ~/Developer/configs && ~/Developer/configs/setup.sh --all
+```
+
+That does everything in order:
+
+1. **Packages:** `brew bundle` from the [`Brewfile`](Brewfile), covering fish, starship, neovim, tmux, Ghostty, the IBM Plex Nerd Font, bat, eza, fzf, fd, delta and more
+2. **Symlinks:** every config into `~/.config` (anything already there is backed up as `*.bak.<timestamp>`)
+3. **Plugins:** Fisher (fish), TPM (tmux), Lazy.nvim (Neovim)
+
+Then four one-time steps, which the script prints at the end too:
+
+```bash
+echo "$(command -v fish)" | sudo tee -a /etc/shells && chsh -s "$(command -v fish)"  # fish as login shell
+gh auth login                    # GitHub CLI + SSH key
+```
+
+- Open Ghostty, or reload it with `cmd+shift+,`, to pick up the theme and font.
+- Put machine-specific git settings (work email, credential helper) in `~/.gitconfig.local`.
+
+**Only want the symlinks?** Run `./setup.sh` with no flag. It's safe to re-run at any time; existing links are skipped.
+
+**Updating:** `git pull && ./setup.sh --all` installs anything new from the Brewfile and syncs plugins. Once `.gitconfig` is linked, GitHub URLs go over SSH, so run `gh auth login` before your first `git pull`.
+
+## ✨ What you get
+
+### Prompt (Starship)
+
+```
+╭─  jwh@tekdeck ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ 󰚥 80% 󰖔 01:31
+├─  configs on  main 󰋚 3m [!2] +82/-64
+╰─ ❯
+```
+
+- **Muted by default.** The frame, clock, battery and commit age stay grey. Colour is reserved for uncommitted changes, errors, low battery, sudo, memory pressure and VPN.
+- **Shown only when relevant:**
+  - memory (above 75%) and VPN, when connected
+  - uptime, after 7 days
+  - k8s context, in Kubernetes folders only (production contexts turn red)
+  - AWS, only when a profile is active
+- **Readable git:**
+  - the path starts at the repo root
+  - how long ago the last commit was
+  - compact status: `[+staged !modified ?untracked ⇡ahead]`
+- **Transient prompt.** Past commands collapse to a faint `❯ command` with the time they ran, so scrollback reads like a transcript.
+
+### Shell (fish)
+
+| Command | What it does |
+|---|---|
+| `cheat tar`, `cheat git rebase` | Practical examples from cheat.sh |
+| `sudo !!`, `vim !$` | Bash-style last command / last argument, expanded as you type |
+| `fcd [dir]` | Fuzzy-jump into any subfolder (tree preview) |
+| `fkill [9]` | Fuzzy-pick processes to kill (tab for several) |
+| `fenv` | Search env vars; copies the picked value |
+| `gcof` | Fuzzy git checkout with a branch-graph preview |
+| `cmd --help␣` | Expands to `--help \| bat`, highlighted help |
+
+**Also built in:**
+- **Greeting:** one line when a shell opens, e.g. `󰖔 Good evening, jwh · Fri 30 Oct · 󰁹 80%`.
+- **Done notifications:** commands over 30 seconds send a macOS notification when they finish, if the terminal isn't focused. Success is silent; a failure plays a sound.
+- **Readable output:** man pages and `bat` share one syntax-highlighting style. `ls` lists folders first. `cat` stays plain for clean copy-paste.
+
+### Terminal, tmux and editor
+
+- **Ghostty:** Tokyo Night that follows macOS light/dark (Moon / Day). IBM Plex Mono (Blex Nerd Font), translucent background.
+- **One palette everywhere.** The prompt, tmux, fish, fzf, bat and delta use ANSI colour names rather than hex, so they switch with Ghostty automatically.
+- **tmux:** prefix `ctrl-s`, splits on `|` and `-`, and a one-line status bar with the session name and window list. `prefix` lights up only while you're holding the prefix key. `ctrl-s o` opens the fuzzy session switcher.
+- **Neovim:** Lua config with LSP (Mason), completion, Telescope, and Tokyo Night Moon/Day. The start screen (`nvim` with no file) has recent files, projects and one-key shortcuts.
+- **git:** delta for every diff, merge (not rebase) on pull, LFS, SSH for GitHub URLs.
 
 ## 📁 Structure
 
 ```text
 configs/
-├── nvim/                   # Neovim configuration
-│   ├── init.lua           # Entry point
-│   └── lua/               # Lua modules
-│       ├── config/        # Plugin manager setup
-│       │   └── lazy.lua   # Lazy.nvim configuration
-│       ├── core/          # Core Neovim settings
-│       │   ├── autocmds.lua   # Auto commands
-│       │   ├── keymaps.lua    # Key mappings
-│       │   └── options.lua    # Editor options
-│       └── plugins/       # Plugin configurations
-│           ├── completion.lua # Auto-completion setup
-│           ├── editor.lua     # Editor enhancements
-│           ├── git.lua        # Git integration
-│           ├── lsp.lua        # Language Server Protocol
-│           ├── navigation.lua # File navigation
-│           └── ui.lua         # UI enhancements
-├── shell/                 # Shell configurations
-│   ├── fish/              # Fish shell configuration
-│   │   ├── config.fish   # Main fish config
-│   │   ├── fish_plugins  # Fisher plugin list
-│   │   ├── completions/  # Custom completions
-│   │   ├── conf.d/       # Configuration snippets
-│   │   └── functions/    # Custom functions
-│   └── omf/              # Oh My Fish configuration
-│       ├── bundle        # Installed packages
-│       ├── channel       # Release channel
-│       └── theme         # Active theme
-├── git/                  # Git configuration
-│   └── .gitconfig        # Git settings and aliases
-├── terminal/             # Terminal applications
-│   ├── ghostty.config   # Ghostty terminal
-│   ├── tmux.conf        # Tmux configuration
-│   └── starship.toml    # Starship prompt
-└── tools/                # Development tools
-    ├── bat/             # bat (cat/man/--help highlighting)
-    ├── gh/              # GitHub CLI
-    ├── htop/            # Process monitor
-    ├── neofetch/        # System info display
-    └── tmuxinator/      # Tmux session manager
+├── Brewfile              # Everything setup.sh --all installs
+├── setup.sh              # Symlinks (+ packages and plugins with --all)
+├── nvim/                 # → ~/.config/nvim
+├── shell/
+│   ├── fish/             # → ~/.config/fish   (config.fish, functions/, conf.d/)
+│   └── omf/              # → ~/.config/omf
+├── terminal/
+│   ├── ghostty.config    # → ~/.config/ghostty/config
+│   ├── starship.toml     # → ~/.config/starship.toml
+│   └── tmux.conf         # → ~/.config/tmux/tmux.conf
+├── git/.gitconfig        # → ~/.gitconfig
+└── tools/
+    ├── bat/              # → ~/.config/bat
+    ├── tmuxinator/       # → ~/.config/tmuxinator
+    ├── gh/  htop/  lf/  neofetch/   # reference configs (not linked by setup.sh)
 ```
 
-## 🚀 Quick Start
-
-Each subdirectory contains its own README with specific setup instructions. These configurations are designed to be portable and use `$HOME` and `~` where possible.
-
-### Installation
-
-Most configurations can be symlinked to their expected locations:
-
-```bash
-# Neovim
-ln -s ~/Developer/configs/nvim ~/.config/nvim
-
-# Fish
-ln -s ~/Developer/configs/shell/fish ~/.config/fish
-
-# Oh My Fish
-ln -s ~/Developer/configs/shell/omf ~/.config/omf
-
-# Starship
-ln -s ~/Developer/configs/terminal/starship.toml ~/.config/starship.toml
-
-# Git
-ln -s ~/Developer/configs/git/.gitconfig ~/.gitconfig
-
-# Ghostty
-ln -s ~/Developer/configs/terminal/ghostty.config ~/.config/ghostty/config
-
-# Tmux
-ln -s ~/Developer/configs/terminal/tmux.conf ~/.config/tmux/tmux.conf
-```
-
-See individual README files for detailed setup instructions.
-
-## 📚 Documentation
-
-- [nvim/](nvim/README.md) - Neovim configuration
-- [shell/](shell/README.md) - Shell configurations (fish, omf)
-- [git/](git/README.md) - Git configuration
-- [terminal/](terminal/README.md) - Terminal tools (tmux, vim, starship)
-- [tools/](tools/README.md) - Development tools
-
-## 💡 Features
-
-- **Neovim**: Modern Lua-based configuration with LSP, completion, and Git integration
-- **Fish Shell**: Fast, user-friendly shell with custom functions and completions
-- **Zsh**: Oh My Zsh with Powerlevel10k theme
-- **Tmux**: Terminal multiplexer with sensible defaults
-- **Starship**: Fast, customizable prompt for any shell
+More detail per area:
+- nvim: layout and conventions in [CLAUDE.md](CLAUDE.md#neovim-nvim)
+- [shell](shell/README.md)
+- [git](git/README.md)
+- [terminal](terminal/README.md)
+- [tools](tools/README.md)
 
 ## 🛠️ Requirements
 
-- macOS (primary target)
-- Neovim 0.9+ (for lua configs)
-- Fish 3.0+ or Zsh 5.0+
-- Git 2.0+
-- Tmux 3.0+ (optional)
+- macOS on Apple silicon or Intel, with [Homebrew](https://brew.sh)
+- Everything else comes from the Brewfile
 
-## 📝 License
-
-Feel free to use and adapt these configurations for your own setup!
+CI on Linux checks that `setup.sh` links everything and that the fish, tmux and shell scripts parse ([`linux-ci.yml`](.github/workflows/linux-ci.yml)).

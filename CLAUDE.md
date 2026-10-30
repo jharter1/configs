@@ -22,6 +22,11 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 
 Always use `ln -s`, never `cp`.
 
+`setup.sh` creates these links (`--all` also runs `brew bundle` and installs fish/tmux/nvim plugins). Keep the bootstrap complete:
+- New symlink → add it to the table above, `setup.sh`, and the verify list in `.github/workflows/linux-ci.yml`
+- New tool a config depends on → add it to `Brewfile`
+- User-facing feature → mention it in the README's "What you get" section
+
 ## Neovim (`nvim/`)
 
 Three-tier Lua structure:
