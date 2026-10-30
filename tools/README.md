@@ -6,6 +6,8 @@ Configuration files for various development and system tools.
 
 ```text
 tools/
+├── bat/             # Syntax-highlighting cat
+│   └── config
 ├── gh/              # GitHub CLI
 │   └── config.yml
 ├── htop/            # Process monitor
@@ -16,6 +18,19 @@ tools/
     ├── arnold.yml
     └── mcDowell.yml
 ```
+
+## 🦇 bat
+
+`cat` with syntax highlighting. Also used as the man pager and for `--help`
+output (see `shell/fish/conf.d/bat.fish`), and for fzf previews.
+
+```bash
+brew install bat
+ln -s ~/Developer/configs/tools/bat ~/.config/bat
+```
+
+Theme is Dracula to match delta and fzf. Add `--map-syntax` lines to
+`config` for files bat can't identify by name.
 
 ## 🔧 GitHub CLI (`gh`)
 

@@ -1,0 +1,11 @@
+# bat config (symlinked to ~/.config/bat/config)
+# Dracula to match delta, fzf and the terminal theme
+--theme="Dracula"
+--style="numbers,changes,header"
+--italic-text=always
+
+# Repo files bat can't guess from the name
+--map-syntax=".gitconfig*:Git Config"
+--map-syntax="*.conf:INI"
+--map-syntax="ghostty.config:INI"
+--map-syntax="fish_plugins:Plain Text"

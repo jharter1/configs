@@ -40,6 +40,7 @@ configs/
 │   ├── tmux.conf        # Tmux configuration
 │   └── starship.toml    # Starship prompt
 └── tools/                # Development tools
+    ├── bat/             # bat (cat/man/--help highlighting)
     ├── gh/              # GitHub CLI
     ├── htop/            # Process monitor
     ├── neofetch/        # System info display

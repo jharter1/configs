@@ -18,6 +18,7 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 | `terminal/tmux.conf` | `~/.config/tmux/tmux.conf` |
 | `git/.gitconfig` | `~/.gitconfig` |
 | `tools/tmuxinator/` | `~/.config/tmuxinator/` |
+| `tools/bat/` | `~/.config/bat/` |
 
 Always use `ln -s`, never `cp`.
 
