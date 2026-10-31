@@ -89,6 +89,14 @@ link "$REPO/git/.gitconfig"            "$HOME/.gitconfig"
 link "$REPO/tools/tmuxinator"          "$HOME/.config/tmuxinator"
 link "$REPO/tools/bat"                 "$HOME/.config/bat"
 
+# Machine-specific git settings live in ~/.gitconfig.local (included by the
+# shared .gitconfig). On macOS, use the Keychain for credentials unless a
+# helper is already set there.
+if [ "$(uname)" = "Darwin" ] && ! git config --file "$HOME/.gitconfig.local" --get credential.helper >/dev/null 2>&1; then
+  git config --file "$HOME/.gitconfig.local" credential.helper osxkeychain
+  echo "set   ~/.gitconfig.local credential.helper = osxkeychain"
+fi
+
 # ── 3. Plugins ───────────────────────────────────────────────────────────────
 if $ALL; then
   # The linked .gitconfig rewrites https://github.com/ to SSH, which fails on a
@@ -126,7 +134,7 @@ Remaining one-time steps:
        chsh -s "$(command -v fish)"
   2. Open Ghostty (or reload with cmd+shift+,) to pick up the theme and font.
   3. gh auth login            # GitHub CLI (and SSH key upload, if not done)
-  4. Machine-specific git settings (email, credential helper) go in ~/.gitconfig.local
+  4. Machine-specific git settings (e.g. work email) go in ~/.gitconfig.local
 EOF
 else
   echo "Open a new shell to apply changes. For packages and plugins too: ./setup.sh --all"

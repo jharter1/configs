@@ -35,7 +35,7 @@ gh auth login                    # GitHub CLI (uploads your SSH key if you haven
 ```
 
 - Open Ghostty, or reload it with `cmd+shift+,`, to pick up the theme and font.
-- Put machine-specific git settings (work email, credential helper) in `~/.gitconfig.local`.
+- Machine-specific git settings (work email, etc.) go in `~/.gitconfig.local`. On macOS, `setup.sh` creates it with the Keychain credential helper.
 
 **Only want the symlinks?** Run `./setup.sh` with no flag. It's safe to re-run at any time; existing links are skipped.
 
