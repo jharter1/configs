@@ -24,6 +24,9 @@ if status is-interactive
     abbr -a brewup 'brew update && brew upgrade && brew cleanup'
     abbr -a o 'open .'  # Open current dir in Finder
 
+    # tmuxinator layouts (tools/tmuxinator): `mux default`, `mux infra`, ...
+    abbr -a mux tmuxinator
+
     # Quick edit config
     abbr -a fishconfig '$EDITOR ~/.config/fish/config.fish'
     abbr -a tmuxconfig '$EDITOR ~/.config/tmux/tmux.conf'

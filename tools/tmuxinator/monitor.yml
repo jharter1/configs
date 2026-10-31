@@ -1,3 +1,4 @@
+# One-screen dashboard: system, containers, pods.
 name: monitor
 root: ~/
 windows:
@@ -5,8 +6,6 @@ windows:
       layout: tiled
       panes:
         - btop
-        - watch -n 2 'docker ps --format "table {{.Names}}\t{{.Status}}"'
-        - watch -n 2 'kubectl get pods'
+        - watch -n 2 -t "docker ps --format 'table {{.Names}}\t{{.Status}}'"
+        - watch -n 2 -t kubectl get pods
         -
-
-# manual commands

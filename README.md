@@ -84,7 +84,7 @@ gh auth login                    # GitHub CLI (uploads your SSH key if you haven
 
 - **Ghostty:** Tokyo Night that follows macOS light/dark (Moon / Day). IBM Plex Mono (Blex Nerd Font), translucent background.
 - **One palette everywhere.** The prompt, tmux, fish, fzf, bat and delta use ANSI colour names rather than hex, so they switch with Ghostty automatically.
-- **tmux:** prefix `ctrl-s`, splits on `|` and `-`, and a one-line status bar with the session name and window list. `prefix` lights up only while you're holding the prefix key. `ctrl-s o` opens the fuzzy session switcher.
+- **tmux:** prefix `ctrl-s`, splits on `|` and `-`, and a one-line status bar with the session name and window list. `prefix` lights up only while you're holding the prefix key. `ctrl-s o` opens the fuzzy session switcher. Ready-made layouts: `mux default`, `mux devops`, `mux infra`, `mux monitor` open in the current project ([details](tools/README.md#-tmuxinator)).
 - **Neovim:** Lua config with LSP (Mason), completion, Telescope, and Tokyo Night Moon/Day. The start screen (`nvim` with no file) has recent files, projects and one-key shortcuts.
 - **git:** delta for every diff, merge (not rebase) on pull, LFS, SSH for GitHub URLs. Quiet modern defaults: recent branches first, pruned remotes, clearer conflicts, remembered resolutions. See [git/README.md](git/README.md).
 - **gh:** delta for `gh pr diff`; `gh prs`, `gh mine`, `gh review`, `gh checks`.

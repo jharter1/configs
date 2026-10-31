@@ -118,79 +118,22 @@ Edit `neofetch/config.conf` to:
 
 ## 🎯 Tmuxinator
 
-Tmux session manager with predefined layouts.
+Linked by `setup.sh` (`~/.config/tmuxinator`). `mux` expands to `tmuxinator` in fish.
+Layouts open in the **current directory**, so `cd` into a project first (except `monitor`).
 
-### Installation
+| Layout | Windows |
+|---|---|
+| `mux default` | editor (nvim + shell), git (gitui), monitor (btop) |
+| `mux devops` | editor, docker (live `docker ps` + shell), k8s (k9s), git |
+| `mux infra` | editor, terraform (empty shell; nothing runs on open), k8s (k9s), monitor |
+| `mux monitor` | one tiled dashboard: btop, docker, pods, shell (opens in `~`) |
 
-```bash
-# Install tmuxinator
-brew install tmuxinator
-
-# Create config directory
-mkdir -p ~/.config/tmuxinator
-
-# Symlink configurations
-ln -s ~/Developer/configs/tools/tmuxinator/arnold.yml ~/.config/tmuxinator/arnold.yml
-ln -s ~/Developer/configs/tools/tmuxinator/mcDowell.yml ~/.config/tmuxinator/mcDowell.yml
-```
-
-### Projects
-
-#### arnold
-
-Project template located at `~/`.
+Pane sizes for the `main-*` layouts come from `tmux.conf` (`main-pane-height 70%`, `main-pane-width 60%`).
 
 ```bash
-# Start arnold session
-tmuxinator start arnold
-
-# Or use alias
-mux arnold
-```
-
-#### mcDowell
-
-Custom project session (check file for specific configuration).
-
-```bash
-# Start mcDowell session
-tmuxinator start mcDowell
-```
-
-### Creating New Projects
-
-```bash
-# Create new project
-tmuxinator new myproject
-
-# Edit existing project
-tmuxinator edit arnold
-
-# List projects
-tmuxinator list
-
-# Delete project
-tmuxinator delete myproject
-```
-
-### Example Project Structure
-
-```yaml
-name: myproject
-root: ~/Developer/myproject
-
-windows:
-  - editor:
-      layout: main-vertical
-      panes:
-        - nvim
-        - git status
-  - server:
-      panes:
-        - npm run dev
-  - console:
-      panes:
-        - fish
+mux list              # layouts
+mux new myproject     # new layout in ~/.config/tmuxinator (lands in this repo)
+mux debug infra       # print the tmux commands without running them
 ```
 
 ## 💡 Tips
@@ -222,20 +165,6 @@ end
 ```zsh
 # Zsh: ~/.zshrc
 neofetch
-```
-
-### Tmuxinator Aliases
-
-Add to shell config:
-
-```fish
-# Fish
-alias mux='tmuxinator'
-```
-
-```zsh
-# Zsh
-alias mux='tmuxinator'
 ```
 
 ## 🔄 Updating Configurations

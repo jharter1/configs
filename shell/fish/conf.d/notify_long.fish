@@ -2,7 +2,7 @@
 set --query notify_long_threshold; or set --global notify_long_threshold 30000 # ms
 
 # Interactive programs that would always trip the threshold
-set --query notify_long_ignore; or set --global notify_long_ignore nvim vim ssh tmux man less top htop btop lazygit fzf
+set --query notify_long_ignore; or set --global notify_long_ignore nvim vim ssh tmux man less top htop btop lazygit gitui k9s watch tmuxinator fzf
 
 function __notify_long_on_postexec --on-event fish_postexec
     set -l code $status

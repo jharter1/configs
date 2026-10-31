@@ -1,29 +1,20 @@
+# Terraform + Kubernetes work. Run from the Terraform root.
+# Nothing runs against the cloud on open; plan/apply are yours to type.
 name: infra
-root: ~/Developer
+root: <%= ENV["PWD"] %>
+startup_window: editor
 windows:
   - editor:
       layout: main-vertical
       panes:
-        - nvim # Updated to nvim!
+        - nvim
         -
-      # command pane
   - terraform:
-      root: ~/Developer/terraform
       panes:
-        - terraform plan -out=plan.tfplan
         -
-      # second pane for apply/etc
   - k8s:
-      layout: tiled
       panes:
-        - kubectl get pods -A -w
-        - kubectl get nodes -w
-        -
-      # manual kubectl commands
-  - monitoring:
-      layout: even-horizontal
+        - k9s
+  - monitor:
       panes:
         - btop
-        -
-
-# docker ps or other monitoring

@@ -10,6 +10,7 @@ brew "zoxide"
 brew "neovim"
 brew "tmux"
 brew "tmuxinator"
+brew "gitui"                      # git window in the tmuxinator layouts
 cask "ghostty"
 cask "font-blex-mono-nerd-font"   # IBM Plex Mono with icons; Ghostty's font
 
@@ -25,6 +26,7 @@ brew "gh"
 brew "jq"
 brew "yq"
 brew "btop"
+brew "watch"                      # live docker/kubectl panes in tmuxinator
 
 # Language toolchains referenced in config.fish / the prompt
 brew "pyenv"

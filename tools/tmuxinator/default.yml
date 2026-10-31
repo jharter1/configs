@@ -1,5 +1,6 @@
+# Everyday coding: `mux default` from inside a project.
 name: default
-root: ~/Developer
+root: <%= ENV["PWD"] %>
 startup_window: editor
 windows:
   - editor:
@@ -7,11 +8,9 @@ windows:
       panes:
         - nvim
         -
-      options:
-        main-pane-height: 75
   - git:
       panes:
         - gitui
-  - monitoring:
+  - monitor:
       panes:
         - btop

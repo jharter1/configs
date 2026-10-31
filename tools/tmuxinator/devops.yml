@@ -1,23 +1,21 @@
+# Containers and clusters around the current project.
 name: devops
-root: ~/Developer
-
+root: <%= ENV["PWD"] %>
 startup_window: editor
-
 windows:
   - editor:
+      layout: main-horizontal
       panes:
         - nvim
-  
+        -
   - docker:
+      layout: even-vertical
       panes:
-        - docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
-        - # docker commands
-  
-  - cloud:
+        - watch -n 2 -t "docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+        -
+  - k8s:
       panes:
-        - # aws/gcloud commands
-        - # kubectl commands
-  
+        - k9s
   - git:
       panes:
         - gitui
