@@ -11,6 +11,29 @@
 [core]
 	pager = delta
 	excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main
+[fetch]
+	# Drop local refs to branches deleted on the remote
+	prune = true
+	pruneTags = true
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[rerere]
+	# Remember conflict resolutions and reuse them
+	enabled = true
+[branch]
+	sort = -committerdate
+[tag]
+	sort = -version:refname
+[rebase]
+	# `git fixup <sha>` then `git rebase -i` squashes automatically
+	autosquash = true
+[column]
+	ui = auto
+[help]
+	autocorrect = prompt
 [interactive]
 	diffFilter = delta --color-only
 [delta]
@@ -18,7 +41,7 @@
 	syntax-theme = ansi
 	side-by-side = false
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 [credential]
     # Platform-specific override via ~/.gitconfig.local
     helper =

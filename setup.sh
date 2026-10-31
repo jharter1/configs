@@ -86,8 +86,11 @@ link "$REPO/terminal/starship.toml"    "$HOME/.config/starship.toml"
 link "$REPO/terminal/ghostty.config"   "$HOME/.config/ghostty/config"
 link "$REPO/terminal/tmux.conf"        "$HOME/.config/tmux/tmux.conf"
 link "$REPO/git/.gitconfig"            "$HOME/.gitconfig"
+link "$REPO/git/.gitignore_global"     "$HOME/.gitignore_global"
 link "$REPO/tools/tmuxinator"          "$HOME/.config/tmuxinator"
 link "$REPO/tools/bat"                 "$HOME/.config/bat"
+link "$REPO/tools/btop/btop.conf"      "$HOME/.config/btop/btop.conf"
+link "$REPO/tools/gh/config.yml"       "$HOME/.config/gh/config.yml"
 
 # Machine-specific git settings live in ~/.gitconfig.local (included by the
 # shared .gitconfig). On macOS, use the Keychain for credentials unless a

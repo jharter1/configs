@@ -1,0 +1,17 @@
+# Global ignores (linked to ~/.gitignore_global, set as core.excludesfile)
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local

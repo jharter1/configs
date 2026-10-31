@@ -17,8 +17,11 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 | `terminal/ghostty.config` | `~/.config/ghostty/config` |
 | `terminal/tmux.conf` | `~/.config/tmux/tmux.conf` |
 | `git/.gitconfig` | `~/.gitconfig` |
+| `git/.gitignore_global` | `~/.gitignore_global` |
 | `tools/tmuxinator/` | `~/.config/tmuxinator/` |
 | `tools/bat/` | `~/.config/bat/` |
+| `tools/btop/btop.conf` | `~/.config/btop/btop.conf` |
+| `tools/gh/config.yml` | `~/.config/gh/config.yml` (never `hosts.yml`, it holds the token) |
 
 Always use `ln -s`, never `cp`.
 
@@ -63,6 +66,7 @@ Fish is the primary shell (Zsh deprecated). Fisher manages plugins via `fish_plu
 - Pull strategy: merge (not rebase)
 - delta is the pager for all git output (`ansi` syntax theme, so it follows Tokyo Night)
 - Git LFS enabled
+- Modern defaults: histogram diffs, zdiff3 conflicts, rerere, fetch prune, autosquash
 - Credential helper is machine-specific: the shared `.gitconfig` leaves `helper =` empty and includes `~/.gitconfig.local`, where `setup.sh` sets `osxkeychain` on macOS. Never hardcode a helper in `git/.gitconfig`.
 
 ## Anti-patterns

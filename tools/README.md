@@ -6,17 +6,13 @@ Configuration files for various development and system tools.
 
 ```text
 tools/
-├── bat/             # Syntax-highlighting cat
-│   └── config
-├── gh/              # GitHub CLI
-│   └── config.yml
-├── htop/            # Process monitor
-│   └── htoprc
-├── neofetch/        # System info display
-│   └── config.conf
-└── tmuxinator/      # Tmux session manager
-    ├── arnold.yml
-    └── mcDowell.yml
+├── bat/config          # → ~/.config/bat           (linked by setup.sh)
+├── btop/btop.conf      # → ~/.config/btop/btop.conf (linked by setup.sh)
+├── gh/config.yml       # → ~/.config/gh/config.yml  (linked by setup.sh)
+├── tmuxinator/         # → ~/.config/tmuxinator     (linked by setup.sh)
+├── htop/htoprc         # reference only
+├── lf/lfrc             # reference only
+└── neofetch/config.conf # reference only
 ```
 
 ## 🦇 bat
@@ -34,44 +30,29 @@ Theme is `ansi`, so it follows the terminal colours (Tokyo Night). Add `--map-sy
 
 ## 🔧 GitHub CLI (`gh`)
 
-Official GitHub command-line tool.
+Linked by `setup.sh`. Only `config.yml` is linked; `hosts.yml` (your login token) stays local.
+Run `gh auth login` once per machine.
 
-### Installation
+- **SSH** for git operations, **delta** as the pager (so `gh pr diff` looks like `git diff`)
+- **Aliases:**
 
-```bash
-# Install gh
-brew install gh
+| Alias | Runs |
+|---|---|
+| `gh co 123` | `pr checkout 123` |
+| `gh prs` | `pr status`: your PRs, reviews requested, current branch |
+| `gh mine` | your open PRs in this repo |
+| `gh review` | PRs waiting on your review |
+| `gh checks` | watch CI on the current branch's PR |
 
-# Authenticate
-gh auth login
+`gh alias set` writes through the symlink, so new aliases land in this repo.
 
-# Symlink configuration
-mkdir -p ~/.config/gh
-ln -s ~/Developer/configs/tools/gh/config.yml ~/.config/gh/config.yml
-```
+## 📈 btop
 
-### Configuration
+Linked by `setup.sh`. Uses the built-in `TTY` theme (ANSI colours, so it follows Ghostty light/dark),
+a transparent background, and only the CPU, memory and process boxes. Vim keys are on.
 
-- **Git Protocol**: SSH (for clone, push, pull)
-- **Prompt**: Enabled for interactive workflows
-- **Aliases**:
-  - `co` → `pr checkout` (checkout pull request)
-
-### Usage Examples
-
-```bash
-# Create PR
-gh pr create
-
-# Checkout PR
-gh co 123  # Using alias
-
-# View repo
-gh repo view
-
-# List issues
-gh issue list
-```
+`save_config_on_exit = False` keeps btop from rewriting the file. To keep a change made in the
+btop menu, copy it into `btop.conf` by hand.
 
 ## 📊 htop
 

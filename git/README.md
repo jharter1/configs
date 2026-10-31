@@ -1,147 +1,43 @@
 # Git Configuration
 
-Personal Git configuration with user settings, LFS support, and macOS credential helper.
+| File | Linked to |
+|---|---|
+| `.gitconfig` | `~/.gitconfig` |
+| `.gitignore_global` | `~/.gitignore_global` (`core.excludesfile`) |
 
-## 📄 Files
+Both are linked by `setup.sh`.
 
-- `.gitconfig` - Main Git configuration file
+## What's set
 
-## 🚀 Installation
+- **delta** pages every diff, log and `git add -p` (`ansi` theme, so it follows Tokyo Night).
+- **Pull merges** (`pull.rebase = false`). `push.default = current` pushes the branch you're on.
+- **SSH for GitHub:** `https://github.com/` URLs are rewritten to `git@github.com:`.
+- **Git LFS** filters.
 
-```bash
-# Symlink configuration
-ln -s ~/Developer/configs/git/.gitconfig ~/.gitconfig
+Quiet quality-of-life defaults:
 
-# Or copy if you prefer
-cp ~/Developer/configs/git/.gitconfig ~/.gitconfig
-```
+| Setting | Effect |
+|---|---|
+| `init.defaultBranch = main` | New repos start on `main` |
+| `fetch.prune`, `fetch.pruneTags` | Branches/tags deleted on the remote disappear locally |
+| `diff.algorithm = histogram` | Cleaner diffs when code moves around |
+| `diff.colorMoved = default` | Moved lines are coloured differently from real changes |
+| `merge.conflictstyle = zdiff3` | Conflicts show the original text too, without repeated lines |
+| `rerere.enabled` | Git remembers how you resolved a conflict and reuses it |
+| `branch.sort = -committerdate` | `git branch` lists recent branches first |
+| `tag.sort = -version:refname` | `git tag` lists newest versions first |
+| `rebase.autosquash` | `git fixup <sha>` commits fold in on the next `git rebase -i` |
+| `column.ui = auto` | Branch/tag lists use columns when they fit |
+| `help.autocorrect = prompt` | Typos like `git stauts` offer the right command |
 
-## ⚙️ Configuration
+Aliases: `git fixup <sha>`, `git recent` (last 10 branches), `git aliases`.
 
-### User Information
+## Machine-specific settings
 
-```ini
-[user]
-    name = Jack Harter
-    email = jack.harter@me.com
-```
-
-**Note**: Update with your own name and email before using!
-
-### Git LFS (Large File Storage)
-
-```ini
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-```
-
-Git LFS is configured for handling large files. Install it if needed:
+`.gitconfig` includes `~/.gitconfig.local`, which isn't in the repo. Put anything that differs per machine there, such as a work email:
 
 ```bash
-brew install git-lfs
-git lfs install
+git config --file ~/.gitconfig.local user.email you@work.example
 ```
 
-### Pull Strategy
-
-```ini
-[pull]
-    rebase = false
-```
-
-Uses merge strategy for `git pull` instead of rebase.
-
-### Pager Settings
-
-```ini
-[pager]
-    log = false
-    diff = false
-    branch = false
-```
-
-Disables pager for `log`, `diff`, and `branch` commands, showing full output directly in the terminal.
-
-### Credential Helper (macOS)
-
-```ini
-[credential]
-    helper = osxkeychain
-```
-
-Uses macOS Keychain to securely store Git credentials.
-
-## 🔧 Customization
-
-### Adding Aliases
-
-Add to `.gitconfig`:
-
-```ini
-[alias]
-    st = status
-    co = checkout
-    br = branch
-    ci = commit
-    unstage = reset HEAD --
-    last = log -1 HEAD
-    visual = log --graph --oneline --all
-```
-
-### Setting Default Branch Name
-
-```ini
-[init]
-    defaultBranch = main
-```
-
-### Enabling Color Output
-
-```ini
-[color]
-    ui = auto
-```
-
-### Configure Editor
-
-```ini
-[core]
-    editor = nvim
-```
-
-## 💡 Tips
-
-### Check Current Configuration
-
-```bash
-# View all settings
-git config --list
-
-# View specific setting
-git config user.name
-```
-
-### Override Settings Locally
-
-For project-specific settings:
-
-```bash
-cd /path/to/project
-git config user.email "work@example.com"
-```
-
-### Global vs Local Config
-
-- `~/.gitconfig` - Global settings (this file)
-- `.git/config` - Local repository settings (per project)
-
-Local settings override global settings.
-
-## 📚 Resources
-
-- [Git Configuration Documentation](https://git-scm.com/docs/git-config)
-- [Git LFS](https://git-lfs.github.com/)
-- [GitHub: Setting up Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
+The credential helper lives there too. The shared file sets `helper =` (empty) to clear any default, and on macOS `setup.sh` writes `helper = osxkeychain` to `~/.gitconfig.local`.
