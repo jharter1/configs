@@ -16,6 +16,7 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 | `terminal/starship.toml` | `~/.config/starship.toml` |
 | `terminal/ghostty.config` | `~/.config/ghostty/config` |
 | `terminal/tmux.conf` | `~/.config/tmux/tmux.conf` |
+| `terminal/tmux-status.sh` | `~/.config/tmux/status.sh` |
 | `git/.gitconfig` | `~/.gitconfig` |
 | `git/.gitignore_global` | `~/.gitignore_global` |
 | `tools/tmuxinator/` | `~/.config/tmuxinator/` |
@@ -57,7 +58,7 @@ Fish is the primary shell (Zsh deprecated). Fisher manages plugins via `fish_plu
 
 ## Terminal (`terminal/`)
 
-- **tmux:** Custom prefix `C-s`, 1-indexed windows, minimal status bar in ANSI colours (follows Ghostty's Tokyo Night light/dark). Install plugins with `<prefix>I`, update with `<prefix>U`.
+- **tmux:** Custom prefix `C-s`, 1-indexed windows, status bar in ANSI colours (session/window pills; CPU/RAM from `tmux-status.sh`) (follows Ghostty's Tokyo Night light/dark). Install plugins with `<prefix>I`, update with `<prefix>U`.
 - **starship:** Multi-line prompt with git, Docker, k8s, Terraform contexts.
 - **ghostty:** GPU-accelerated terminal.
 

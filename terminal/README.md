@@ -4,7 +4,8 @@ Terminal application configurations for Tmux, Vim, and Starship prompt.
 
 ## 📄 Files
 
-- `.tmux.conf` - Tmux terminal multiplexer configuration
+- `tmux.conf` - Tmux configuration (→ `~/.config/tmux/tmux.conf`)
+- `tmux-status.sh` - CPU/RAM readout for the tmux status bar (→ `~/.config/tmux/status.sh`)
 - `.vimrc` - Vim editor configuration
 - `starship.toml` - Starship cross-shell prompt configuration
 
@@ -19,11 +20,12 @@ Terminal multiplexer that allows multiple terminal sessions in a single window.
 brew install tmux
 
 # Install TPM (Tmux Plugin Manager)
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
-# Symlink configuration
+# Symlink configuration (setup.sh does both)
 mkdir -p ~/.config/tmux
 ln -s ~/Developer/configs/terminal/tmux.conf ~/.config/tmux/tmux.conf
+ln -s ~/Developer/configs/terminal/tmux-status.sh ~/.config/tmux/status.sh
 
 # Start tmux and install plugins
 tmux
@@ -35,7 +37,7 @@ tmux
 - **Custom Prefix**: `Ctrl-s` (instead of default `Ctrl-b`)
 - **Live Reload**: `Ctrl-s + r` to reload configuration
 - **Mouse Support**: Enabled for scrolling and pane selection
-- **Status Bar**: Top position, minimal, in ANSI colours (follows the terminal theme)
+- **Status Bar**: Top position, in ANSI colours (follows the terminal theme)
 - **256 Color Support**: Full color terminal
 
 ### Plugins
@@ -49,9 +51,13 @@ Managed via [TPM](https://github.com/tmux-plugins/tpm):
 
 ### Status Bar
 
-Deliberately quiet: session name, then the window list (current window in
-bold). `prefix` appears on the right only while the prefix key is held. Git,
-battery and time already live in the Starship prompt, so they aren't repeated.
+- **Left:** the session name in a blue pill.
+- **Middle:** windows; the current one is a purple pill, and zoomed windows get a 󰊓.
+- **Right:** CPU and RAM, muted until 75% (yellow) or 90% (red), from `tmux-status.sh`
+  every 5 seconds. `prefix` appears while the prefix key is held, and `󰌘 ssh` while
+  the current pane is connected to another machine.
+
+Git, battery and time already live in the Starship prompt, so they aren't repeated.
 
 ### Plugin Management
 
