@@ -1,0 +1,94 @@
+# k9s skin: quiet, ANSI colours only, so it follows Ghostty's Tokyo Night light/dark.
+# Selected with K9S_SKIN=quiet (shell/fish/config.fish). Colour names map to ANSI slots:
+#   maroon=1 red  green=2  olive=3 yellow  navy=4 blue  purple=5 magenta  teal=6 cyan
+#   silver=7 muted text  gray=8 frame      default = terminal fg/bg
+# Same rule as the prompt: grey by default, colour only when something needs attention.
+
+k9s:
+  body:
+    fgColor: default
+    bgColor: default
+    logoColor: gray
+  prompt:
+    fgColor: default
+    bgColor: default
+    suggestColor: silver
+  info:
+    fgColor: silver
+    sectionColor: default
+  help:
+    fgColor: default
+    bgColor: default
+    keyColor: navy
+    numKeyColor: purple
+    sectionColor: silver
+  dialog:
+    fgColor: default
+    bgColor: default
+    buttonFgColor: default
+    buttonBgColor: gray
+    buttonFocusFgColor: black
+    buttonFocusBgColor: navy
+    labelFgColor: purple
+    fieldFgColor: default
+  frame:
+    border:
+      fgColor: gray
+      focusColor: navy
+    menu:
+      fgColor: silver
+      keyColor: navy
+      numKeyColor: purple
+    crumbs:
+      fgColor: black
+      bgColor: gray
+      activeColor: navy
+    status:
+      newColor: teal
+      modifyColor: navy
+      addColor: green
+      pendingColor: olive
+      errorColor: maroon
+      highlightColor: purple
+      killColor: gray
+      completedColor: gray
+    title:
+      fgColor: default
+      bgColor: default
+      highlightColor: navy
+      counterColor: silver
+      filterColor: purple
+  views:
+    charts:
+      bgColor: default
+      defaultDialColors: [navy, maroon]
+      defaultChartColors: [navy, maroon]
+    table:
+      fgColor: default
+      bgColor: default
+      cursorFgColor: black
+      cursorBgColor: navy
+      markColor: purple
+      header:
+        fgColor: silver
+        bgColor: default
+        sorterColor: navy
+    xray:
+      fgColor: default
+      bgColor: default
+      cursorColor: navy
+      cursorTextColor: black
+      graphicColor: gray
+      showIcons: false
+    yaml:
+      keyColor: navy
+      colonColor: gray
+      valueColor: default
+    logs:
+      fgColor: default
+      bgColor: default
+      indicator:
+        fgColor: silver
+        bgColor: default
+        toggleOnColor: navy
+        toggleOffColor: gray

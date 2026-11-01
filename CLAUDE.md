@@ -21,8 +21,10 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 | `git/.gitignore_global` | `~/.gitignore_global` |
 | `tools/tmuxinator/` | `~/.config/tmuxinator/` |
 | `tools/bat/` | `~/.config/bat/` |
+| `tools/lf/lfrc` | `~/.config/lf/lfrc` |
 | `tools/btop/btop.conf` | `~/.config/btop/btop.conf` |
 | `tools/gh/config.yml` | `~/.config/gh/config.yml` (never `hosts.yml`, it holds the token) |
+| `tools/k9s/quiet.yaml` | `~/Library/Application Support/k9s/skins/quiet.yaml` (Linux: `~/.config/k9s/skins/`) |
 
 Always use `ln -s`, never `cp`.
 

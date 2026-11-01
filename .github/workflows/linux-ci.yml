@@ -26,9 +26,11 @@ jobs:
           check "$HOME/.gitconfig"
           check "$HOME/.config/tmuxinator"
           check "$HOME/.config/bat"
+          check "$HOME/.config/lf/lfrc"
           check "$HOME/.gitignore_global"
           check "$HOME/.config/btop/btop.conf"
           check "$HOME/.config/gh/config.yml"
+          check "$HOME/.config/k9s/skins/quiet.yaml"
           exit $fail
   fish:
     name: Fish Config Syntax

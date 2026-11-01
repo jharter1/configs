@@ -90,8 +90,12 @@ link "$REPO/git/.gitconfig"            "$HOME/.gitconfig"
 link "$REPO/git/.gitignore_global"     "$HOME/.gitignore_global"
 link "$REPO/tools/tmuxinator"          "$HOME/.config/tmuxinator"
 link "$REPO/tools/bat"                 "$HOME/.config/bat"
+link "$REPO/tools/lf/lfrc"             "$HOME/.config/lf/lfrc"
 link "$REPO/tools/btop/btop.conf"      "$HOME/.config/btop/btop.conf"
 link "$REPO/tools/gh/config.yml"       "$HOME/.config/gh/config.yml"
+# k9s keeps its config under Application Support on macOS; skin picked by K9S_SKIN
+if [ "$(uname)" = "Darwin" ]; then K9S_DIR="$HOME/Library/Application Support/k9s"; else K9S_DIR="$HOME/.config/k9s"; fi
+link "$REPO/tools/k9s/quiet.yaml"      "$K9S_DIR/skins/quiet.yaml"
 
 # Machine-specific git settings live in ~/.gitconfig.local (included by the
 # shared .gitconfig). On macOS, use the Keychain for credentials unless a

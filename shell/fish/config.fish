@@ -79,6 +79,9 @@ end
 # A module that times out (e.g. machine busy) just drops out of the prompt;
 # don't print starship's warning about it over the prompt.
 set -gx STARSHIP_LOG error
+
+# k9s skin in ANSI colours (tools/k9s/quiet.yaml)
+set -gx K9S_SKIN quiet
 starship init fish | source
 
 # Transient prompt: once a command runs, its full prompt collapses to a faint
