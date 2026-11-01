@@ -1,273 +1,75 @@
-# Terminal Configuration
+# Terminal
 
-Terminal application configurations for Tmux, Vim, and Starship prompt.
+| File | Linked to |
+|---|---|
+| `ghostty.config` | `~/.config/ghostty/config` |
+| `starship.toml` | `~/.config/starship.toml` |
+| `tmux.conf` | `~/.config/tmux/tmux.conf` |
+| `tmux-status.sh` | `~/.config/tmux/status.sh` (CPU/RAM for the tmux bar) |
 
-## 📄 Files
+All linked by `setup.sh`. Colours everywhere are ANSI names, not hex, so they follow Ghostty's
+theme: `TokyoNight Moon` in dark mode, `TokyoNight Day` in light mode.
 
-- `tmux.conf` - Tmux configuration (→ `~/.config/tmux/tmux.conf`)
-- `tmux-status.sh` - CPU/RAM readout for the tmux status bar (→ `~/.config/tmux/status.sh`)
-- `.vimrc` - Vim editor configuration
-- `starship.toml` - Starship cross-shell prompt configuration
+## 👻 Ghostty
 
-## 🖥️ Tmux
+- **Theme:** Tokyo Night Moon / Day, switching with macOS appearance
+- **Font:** IBM Plex Mono (`BlexMono Nerd Font`, the non-Mono build so icons aren't squeezed), 15 pt,
+  SemiBold for bold, 10% taller cells and icons
+- **Window:** 80% opacity with blur, 10 px padding, tabs in the title bar
+- **Behaviour:** fish shell integration, copy on select, option key as alt, no close confirmation
 
-Terminal multiplexer that allows multiple terminal sessions in a single window.
-
-### Installation
-
-```bash
-# Install tmux
-brew install tmux
-
-# Install TPM (Tmux Plugin Manager)
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-
-# Symlink configuration (setup.sh does both)
-mkdir -p ~/.config/tmux
-ln -s ~/Developer/configs/terminal/tmux.conf ~/.config/tmux/tmux.conf
-ln -s ~/Developer/configs/terminal/tmux-status.sh ~/.config/tmux/status.sh
-
-# Start tmux and install plugins
-tmux
-# Press Ctrl-s + I (capital i) to install plugins
-```
-
-### Key Features
-
-- **Custom Prefix**: `Ctrl-s` (instead of default `Ctrl-b`)
-- **Live Reload**: `Ctrl-s + r` to reload configuration
-- **Mouse Support**: Enabled for scrolling and pane selection
-- **Status Bar**: Top position, in ANSI colours (follows the terminal theme)
-- **256 Color Support**: Full color terminal
-
-### Plugins
-
-Managed via [TPM](https://github.com/tmux-plugins/tpm):
-
-- **tmux-sensible** - Sensible default settings
-- **tmux-resurrect** - Save/restore sessions
-- **tmux-continuum** - Automatic session saving
-- **tmux-sessionx** - fzf session switcher (`Ctrl-s + o`)
-
-### Status Bar
-
-- **Left:** the session name in a blue pill.
-- **Middle:** windows; the current one is a purple pill, and zoomed windows get a 󰊓.
-- **Right:** CPU and RAM, muted until 75% (yellow) or 90% (red), from `tmux-status.sh`
-  every 5 seconds. `prefix` appears while the prefix key is held, and `󰌘 ssh` while
-  the current pane is connected to another machine.
-
-Git, battery and time already live in the Starship prompt, so they aren't repeated.
-
-### Plugin Management
-
-```bash
-# Install plugins
-Ctrl-s + I
-
-# Update plugins
-Ctrl-s + U
-
-# Uninstall plugins (remove from config first)
-Ctrl-s + alt + u
-```
-
-## 📝 Vim
-
-Minimal Vim configuration.
-
-### Installation
-
-```bash
-# Symlink configuration
-ln -s ~/Developer/configs/terminal/.vimrc ~/.vimrc
-```
-
-### Features
-
-- Syntax highlighting enabled
-
-**Note**: For a full-featured editor, use the Neovim configuration in [lua/](../lua/README.md).
+Ghostty doesn't reload on save. Press `cmd+shift+,`. Check the file with
+`ghostty +validate-config`. Comments must be on their own line.
 
 ## ✨ Starship
 
-Fast, customizable prompt for any shell (Fish, Zsh, Bash).
-
-### Installation
-
-```bash
-# Install Starship
-brew install starship
-
-# Symlink configuration
-mkdir -p ~/.config
-ln -s ~/Developer/configs/terminal/starship.toml ~/.config/starship.toml
-
-# Add to your shell config:
-# Fish: Already configured in shell/fish/config.fish
-# Zsh: Add to .zshrc: eval "$(starship init zsh)"
-# Bash: Add to .bashrc: eval "$(starship init bash)"
-```
-
-### Features
-
-#### Custom Multi-line Format
+Three-line prompt, muted by default. Colour appears only for uncommitted changes, errors, low
+battery, sudo, memory pressure and VPN.
 
 ```
-┌───────────────────> username@hostname                                  🔋 100% ⌚ 14:30
-│~/Developer/configs ⚡ main +1 *2
-│🐋 docker ⛵ k8s-context
-└─> ✔
+╭─  jwh@tekdeck ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ 󰚥 80% 󰖔 01:31
+├─  configs on  main 󰋚 3m [!2] +82/-64
+╰─ ❯
 ```
 
-#### Prompt Components
+- **Line 1:** user@host, then sudo, jobs, nested shells, memory (over 75%) and VPN, but only when
+  relevant. On the right: uptime (after 7 days), battery, a time-of-day icon and the clock.
+- **Line 2:** the path starting at the repo root, branch, last-commit age, git status and line counts.
+- **Line 3:** last exit status, how long the command took, `❯`.
+- **Right side:** language versions, Docker, k8s (Kubernetes folders only; prod contexts in red) and
+  AWS (only with a profile).
+- Past prompts collapse to `❯ command` (transient prompt, set up in `config.fish`).
 
-**Line 1 (Status)**:
-- Username and hostname (always shown)
-- Battery status (desktop users can disable)
-- Current time
+Custom modules (VPN, uptime, time of day, commit age) are short shell commands with a 500 ms limit.
+On a busy machine one may skip a prompt; that's expected. Check speed with `starship timings`.
+Colours come from the `quiet` palette at the end of the file (`frame`, `muted`), which must stay
+the last table in the file.
 
-**Line 2 (Directory & Git)**:
-- Current directory (truncated to 3 levels)
-- Git branch with lightning symbol ⚡
-- Git status indicators:
-  - `+` staged files (green)
-  - `*` modified files (yellow)
-  - `?` untracked files (red)
-- Git metrics (insertions/deletions)
+## 🖥️ tmux
 
-**Line 3 (Context)**:
-- Docker context 🐋
-- Kubernetes cluster ⛵
-- Terraform workspace 🚜
-- Vagrant status
+| Keys | Does |
+|---|---|
+| `ctrl-s` | Prefix |
+| `ctrl-s \|` / `ctrl-s -` | Split side by side / top and bottom (keeps the current folder) |
+| `shift-←` / `shift-→` | Previous / next window (no prefix) |
+| `ctrl-s o` | Fuzzy session switcher (sessionx) |
+| `ctrl-s r` | Reload the config |
+| `ctrl-s I` / `ctrl-s U` | Install / update plugins (TPM) |
 
-**Line 4 (Input)**:
-- Command duration (if > 1s)
-- Success/error indicator: ✔/✗
+- Windows and panes start at 1. Windows are named after the folder, or the running command.
+- Mouse on; vi copy mode copies to the macOS clipboard.
+- `main-*` layouts give the main pane 70% height / 60% width (used by tmuxinator).
+- **Plugins** (TPM, in `~/.config/tmux/plugins`): sensible, resurrect (saves panes and nvim
+  sessions; auto-restore off), continuum, sessionx.
 
-#### Cloud & DevOps Tools
+**Status bar** (top):
+- **Left:** the session name in a blue pill.
+- **Middle:** windows; the current one is a purple pill, and zoomed windows get a 󰊓.
+- **Right:** CPU and RAM, muted until 75% (yellow) or 90% (red), from `tmux-status.sh` every 5
+  seconds. `prefix` appears while the prefix key is held, and `󰌘 ssh` while the current pane is
+  connected to another machine.
 
-- **Azure**: Shows subscription (disabled by default)
-- **Google Cloud**: Shows account/project (disabled by default)
-- **Kubernetes**: Shows context and namespace
-- **Terraform**: Shows workspace
-- **Vagrant**: Shows status
-- **Docker**: Shows context (disabled by default)
+Git, battery and time already live in the prompt, so the bar doesn't repeat them.
 
-#### Customization
-
-Edit `starship.toml`:
-
-```toml
-# Enable/disable Docker context
-[docker_context]
-disabled = false
-
-# Disable battery on desktop
-[battery]
-disabled = true
-
-# Change directory truncation
-[directory]
-truncation_length = 5
-```
-
-### Testing Changes
-
-```bash
-# Reload shell or:
-source ~/.config/fish/config.fish  # Fish
-source ~/.zshrc                     # Zsh
-```
-
-## 🎨 Color Schemes
-
-Tokyo Night everywhere, following macOS appearance: Ghostty uses
-`TokyoNight Moon` in dark mode and `TokyoNight Day` in light mode. tmux,
-Starship, fish, fzf, bat and delta use ANSI colour names instead of hex, so
-they switch with it. Neovim uses tokyonight.nvim (moon / day).
-
-## 💡 Tips
-
-### Tmux Session Management
-
-```bash
-# Create named session
-tmux new -s mysession
-
-# List sessions
-tmux ls
-
-# Attach to session
-tmux attach -t mysession
-
-# Detach from session
-Ctrl-s + d
-```
-
-### Tmux Pane Navigation
-
-```bash
-# Split panes
-Ctrl-s + %    # Horizontal split
-Ctrl-s + "    # Vertical split
-
-# Navigate panes
-Ctrl-s + arrow keys
-
-# Resize panes (hold Ctrl-s)
-Ctrl-s + (arrow keys)
-```
-
-### Starship Performance
-
-Starship is async and won't slow down your prompt. If you experience slowness:
-
-```toml
-# Reduce timeout
-scan_timeout = 300
-command_timeout = 1000
-```
-
-## 🐛 Troubleshooting
-
-### Tmux Colors Not Working
-
-Ensure terminal supports 256 colors:
-
-```bash
-echo $TERM
-# Should show "tmux-256color" inside tmux
-```
-
-### Tmux Plugins Not Loading
-
-```bash
-# Reinstall TPM
-rm -rf ~/.tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# In tmux: Ctrl-s + I
-```
-
-### Starship Not Showing
-
-Ensure it's initialized in shell config:
-
-```fish
-# Fish (check ~/.config/fish/config.fish)
-starship init fish | source
-```
-
-```zsh
-# Zsh (check ~/.zshrc)
-eval "$(starship init zsh)"
-```
-
-## 📚 Resources
-
-- [Tmux Manual](https://man.openbsd.org/tmux.1)
-- [TPM Documentation](https://github.com/tmux-plugins/tpm)
-- [Starship Documentation](https://starship.rs/)
-- [Starship Configuration](https://starship.rs/config/)
+**Plugins missing?** `git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm`,
+then `ctrl-s I`. `setup.sh --all` does this.

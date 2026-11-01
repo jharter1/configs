@@ -89,6 +89,7 @@ gh auth login                    # GitHub CLI (uploads your SSH key if you haven
 - **git:** delta for every diff, merge (not rebase) on pull, LFS, SSH for GitHub URLs. Quiet modern defaults: recent branches first, pruned remotes, clearer conflicts, remembered resolutions. See [git/README.md](git/README.md).
 - **gh:** delta for `gh pr diff`; `gh prs`, `gh mine`, `gh review`, `gh checks`.
 - **btop:** CPU, memory and processes only, in the terminal's own colours.
+- **k9s:** a quiet skin in the same colours; red and yellow only for failing or pending pods.
 
 ## 📁 Structure
 
@@ -112,8 +113,9 @@ configs/
     ├── bat/              # → ~/.config/bat
     ├── btop/btop.conf    # → ~/.config/btop/btop.conf
     ├── gh/config.yml     # → ~/.config/gh/config.yml
-    ├── tmuxinator/       # → ~/.config/tmuxinator
-    └── htop/  lf/  neofetch/   # reference configs (not linked by setup.sh)
+    ├── k9s/quiet.yaml    # → k9s skins folder
+    ├── lf/lfrc           # → ~/.config/lf/lfrc
+    └── tmuxinator/       # → ~/.config/tmuxinator
 ```
 
 More detail per area:

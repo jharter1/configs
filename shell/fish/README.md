@@ -1,194 +1,68 @@
-# Fish Shell Configuration
+# Fish
 
-Modern, user-friendly shell configuration with plugins, custom functions, and completions.
-
-## 📁 Structure
+Linked to `~/.config/fish` by `setup.sh`. Fish is the login shell; zsh and bash are not configured.
 
 ```text
 fish/
-├── config.fish          # Main configuration file
-├── fish_plugins         # Fisher plugin list
-├── config.fish.backup   # Backup configuration
-├── completions/         # Custom tab completions
-│   ├── consul.fish     # HashiCorp Consul
-│   ├── docker.fish     # Docker CLI
-│   ├── fisher.fish     # Fisher plugin manager
-│   ├── minikube.fish   # Minikube Kubernetes
-│   ├── nomad.fish      # HashiCorp Nomad
-│   └── vagrant.fish    # Vagrant
-├── conf.d/              # Configuration snippets
-│   ├── autopair.fish   # Auto-pairing plugin config
-│   └── omf.fish        # Oh My Fish remnants
-└── functions/           # Custom functions
-    ├── _autopair_*.fish # Auto-pairing helpers
-    ├── cless.fish      # Colorized less
-    ├── fisher.fish     # Fisher plugin manager
-    └── man.fish        # Colorized man pages
+├── config.fish     # PATH, abbreviations, tool integrations, prompt
+├── fish_plugins    # Fisher manifest (fisher, autopair, sponge)
+├── fish_variables  # Fish's own state (Fisher bookkeeping); don't hand-edit
+├── conf.d/         # Auto-loaded snippets
+├── functions/      # Auto-loaded functions, one per file
+└── completions/    # Extra tab completions (docker, consul, nomad, minikube, vagrant)
 ```
 
-## 🚀 Installation
+## Plugins (Fisher)
 
-### Prerequisites
+| Plugin | What it does |
+|---|---|
+| `jorgebucaran/fisher` | The plugin manager itself |
+| `jorgebucaran/autopair.fish` | Closes brackets and quotes as you type |
+| `meaningful-ooo/sponge` | Keeps typos and failed commands out of history |
 
-```bash
-# Install Fish (macOS with Homebrew)
-brew install fish
+`fisher update` installs/updates everything in `fish_plugins` (`setup.sh --all` runs it).
+`fisher install owner/repo` adds one and records it in the manifest. Plugin files land in
+`functions/` and `conf.d/` inside this repo. Fisher and autopair are committed, so a symlink-only
+setup still has them; sponge's files are git-ignored and come from `fisher update`.
 
-# Add Fish to allowed shells
-echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+## config.fish
 
-# Set as default shell
-chsh -s /opt/homebrew/bin/fish
-```
+- **Abbreviations** (expand as you type): `g`, `gs`, `gc`, `gp`, `gpl`, `gco`, `gd`; `..`, `...`; `brewup`; `o` (Finder);
+  `mux` (tmuxinator); `fishconfig`, `tmuxconfig`, `nvimconfig`
+- **eza** for `ls` / `ll` / `la` / `lt`, folders first
+- **zoxide** replaces `cd`: `cd proj` jumps to the most-used matching folder
+- **bat** replaces `cat`, plain style (clean copy-paste)
+- **fzf** with fd for files and bat for previews: `ctrl-r` history, `ctrl-t` files, `alt-c` folders
+- **pyenv, rbenv, conda** initialised when installed. The conda block is auto-managed; leave it alone
+- **gcloud** loads on first use, so it doesn't slow down startup
+- **Starship** prompt with transient mode, plus `STARSHIP_LOG=error` so a slow module just drops out quietly
+- `K9S_SKIN=quiet` (see `tools/k9s/`)
 
-### Setup Configuration
+## functions/
 
-```bash
-# Backup existing config if present
-mv ~/.config/fish ~/.config/fish.backup
+| Function | What it does |
+|---|---|
+| `fish_greeting` | One quiet line on startup: time of day, date, battery, uptime after a week |
+| `cheat <topic>` | Examples from cheat.sh, e.g. `cheat tar`, `cheat git rebase` |
+| `fcd [dir]` | Fuzzy-jump into a subfolder, with a tree preview |
+| `fkill [signal]` | Fuzzy-pick processes to kill (tab selects several) |
+| `fenv` | Search environment variables; copies the chosen value |
+| `gcof` | Fuzzy git checkout with a branch-graph preview |
+| `pip` | Always `python3 -m pip` |
 
-# Symlink this configuration
-ln -s ~/Developer/configs/shell/fish ~/.config/fish
+## conf.d/
 
-# Start Fish
-fish
-```
+| File | What it does |
+|---|---|
+| `bat.fish` | bat as the man pager; `cmd --help␣` expands to `--help \| bat` |
+| `history_expansion.fish` | `!!` and `!$` expand to the last command / last argument |
+| `notify_long.fish` | macOS notification when a command over 30 s finishes while the terminal is in the background. Silent on success, sound on failure. Full-screen apps (nvim, k9s, btop, ...) are skipped |
+| `omf.fish` | Loads Oh My Fish if present (legacy) |
+| `fish_frozen_*.fish` | Written by fish 4.3 when it moved theme/key-binding variables out of universal scope; leave as is |
+| `autopair.fish`, `sponge.fish` | Plugin files (Fisher) |
 
-### Install Fisher and Plugins
+## Adding things
 
-```bash
-# Install Fisher plugin manager
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
-fisher install jorgebucaran/fisher
-
-# Install all plugins from fish_plugins file
-fisher update
-```
-
-## 🔌 Plugins
-
-Managed via [Fisher](https://github.com/jorgebucaran/fisher):
-
-- **autopair.fish** - Auto-close parentheses, brackets, quotes, and strings
-- **colored_man_pages.fish** - Syntax highlighting for man pages
-
-### Adding New Plugins
-
-```bash
-fisher install <github-user>/<plugin-name>
-# Example: fisher install jethrokuan/z
-```
-
-## 🛠️ Custom Functions
-
-- `cless` - Colorized output piped to less
-- `man` - Enhanced man pages with color support
-- Autopair functions - Handle smart bracket/quote pairing
-
-## 📝 Custom Completions
-
-Tab completions for common DevOps and container tools:
-
-- Docker
-- Consul (HashiCorp)
-- Nomad (HashiCorp)
-- Vagrant
-- Minikube
-- Fisher
-
-## 🔧 Integrations
-
-The configuration integrates with:
-
-- **pyenv** - Python version management
-- **conda** - Anaconda/Miniconda environments
-- **rbenv** - Ruby version management
-- **starship** - Cross-shell prompt (config in `terminal/starship.toml`)
-- **Google Cloud SDK** - gcloud CLI tools
-- **kiro** - Terminal integration (if available)
-
-### Required Tools
-
-Install these tools separately if you need them:
-
-```bash
-# pyenv
-brew install pyenv
-
-# rbenv
-brew install rbenv
-
-# starship
-brew install starship
-
-# Google Cloud SDK
-brew install --cask google-cloud-sdk
-```
-
-## 💡 Tips
-
-### Updating Plugins
-
-```bash
-fisher update
-```
-
-### Listing Installed Plugins
-
-```bash
-fisher list
-```
-
-### Removing a Plugin
-
-```bash
-fisher remove <plugin-name>
-```
-
-### Reload Configuration
-
-```bash
-source ~/.config/fish/config.fish
-```
-
-## 🎨 Customization
-
-Edit `config.fish` to add:
-
-- Custom aliases
-- Environment variables
-- Additional function autoloads
-- Shell-specific settings
-
-Functions in `functions/` are auto-loaded by Fish, so just add new `.fish` files there.
-
-## 🐛 Troubleshooting
-
-### Slow Shell Startup
-
-Check which integrations are enabled in `config.fish`. Comment out unused ones:
-
-```fish
-# eval "$(pyenv init -)"  # Disable if not using pyenv
-```
-
-### Completions Not Working
-
-```bash
-# Rebuild completions
-fish_update_completions
-```
-
-### Plugin Issues
-
-```bash
-# Remove and reinstall plugins
-fisher list | fisher remove
-fisher update
-```
-
-## 📚 Resources
-
-- [Fish Documentation](https://fishshell.com/docs/current/)
-- [Fisher Plugin Manager](https://github.com/jorgebucaran/fisher)
-- [Awesome Fish](https://github.com/jorgebucaran/awsm.fish) - Curated list of plugins
+- New function: `functions/<name>.fish` containing one `function <name>` (fish loads it on first use).
+- New startup snippet: `conf.d/<name>.fish`.
+- Machine-only settings (secrets, work paths): put them in `conf.d/local.fish`, which is git-ignored.

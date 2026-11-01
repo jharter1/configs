@@ -5,3 +5,6 @@
 shell/fish/conf.d/sponge.fish
 shell/fish/functions/_sponge_*.fish
 shell/fish/functions/sponge_filter_*.fish
+
+# Machine-only fish settings (secrets, work paths)
+shell/fish/conf.d/local.fish

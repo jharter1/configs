@@ -55,7 +55,7 @@ Fish shell (deprecated Zsh in favor of Fish) managed by Fisher plugin manager:
 - **No aliases configured** — vanilla Git commands preferred
 
 ### Tool Configurations (`tools/`)
-Individual tool subdirectories (gh, htop, neofetch, tmuxinator) with tool-specific configs.
+Individual tool subdirectories (bat, btop, gh, k9s, lf, tmuxinator), all linked by `setup.sh`.
 
 ## Critical Workflows
 
@@ -119,7 +119,7 @@ Edit `tmux.conf`, prefix `C-s` + `I` to install, `U` to update via TPM.
 ## Integration Points
 
 - **Starship prompt:** Configured in [starship.toml](../terminal/starship.toml), shared shell prompt
-- **Tmuxinator:** Session definitions in `tools/tmuxinator/*.yml` (arnold, default, mcDowell)
+- **Tmuxinator:** Session definitions in `tools/tmuxinator/*.yml` (default, devops, infra, monitor)
 - **Python:** Managed by pyenv (initialized in `config.fish`)
 - **Node/Ruby:** rbenv for Ruby, system Node unless specified
 - **Git:** Symlink `git/.gitconfig` to `~/.gitconfig`, pager disabled for direct terminal output, Git LFS enabled

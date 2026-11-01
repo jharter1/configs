@@ -1,29 +1,22 @@
-# Development Tools Configuration
+# Tools
 
-Configuration files for various development and system tools.
-
-## 📁 Contents
+Configs for command-line tools, all linked by `setup.sh`. Like the rest of the repo they use ANSI
+colour names, so they follow Ghostty's Tokyo Night light/dark.
 
 ```text
 tools/
-├── bat/config          # → ~/.config/bat           (linked by setup.sh)
-├── btop/btop.conf      # → ~/.config/btop/btop.conf (linked by setup.sh)
-├── gh/config.yml       # → ~/.config/gh/config.yml  (linked by setup.sh)
-├── tmuxinator/         # → ~/.config/tmuxinator     (linked by setup.sh)
-├── htop/htoprc         # reference only
-├── lf/lfrc             # reference only
-└── neofetch/config.conf # reference only
+├── bat/config        # → ~/.config/bat/config
+├── btop/btop.conf    # → ~/.config/btop/btop.conf
+├── gh/config.yml     # → ~/.config/gh/config.yml
+├── k9s/quiet.yaml    # → <k9s config dir>/skins/quiet.yaml
+├── lf/lfrc           # → ~/.config/lf/lfrc
+└── tmuxinator/       # → ~/.config/tmuxinator
 ```
 
 ## 🦇 bat
 
 `cat` with syntax highlighting. Also used as the man pager and for `--help`
 output (see `shell/fish/conf.d/bat.fish`), and for fzf previews.
-
-```bash
-brew install bat
-ln -s ~/Developer/configs/tools/bat ~/.config/bat
-```
 
 Theme is `ansi`, so it follows the terminal colours (Tokyo Night). Add `--map-syntax` lines to
 `config` for files bat can't identify by name.
@@ -54,67 +47,20 @@ a transparent background, and only the CPU, memory and process boxes. Vim keys a
 `save_config_on_exit = False` keeps btop from rewriting the file. To keep a change made in the
 btop menu, copy it into `btop.conf` by hand.
 
-## 📊 htop
+## ☸️ k9s
 
-Interactive process viewer, better than `top`.
+`quiet.yaml` is a skin in ANSI colours: grey frame and headers, a blue cursor and focus, purple for
+filters, and colour in the status column only for errors (red), pending (yellow), new (cyan) and
+added (green). fish sets `K9S_SKIN=quiet` to pick it.
 
-### Installation
+k9s keeps its own config (`config.yaml`, cluster settings) in
+`~/Library/Application Support/k9s` on macOS and rewrites it, so only the skin is linked. Run
+`k9s info` to see the paths.
 
-```bash
-# Install htop
-brew install htop
+## 📂 lf
 
-# Symlink configuration
-mkdir -p ~/.config/htop
-ln -s ~/Developer/configs/tools/htop/htoprc ~/.config/htop/htoprc
-
-# Run
-htop
-```
-
-### Features
-
-The configuration includes custom columns, colors, and display settings optimized for development workflows.
-
-## 🎨 neofetch
-
-System information display tool with ASCII art.
-
-### Installation
-
-```bash
-# Install neofetch
-brew install neofetch
-
-# Symlink configuration
-mkdir -p ~/.config/neofetch
-ln -s ~/Developer/configs/tools/neofetch/config.conf ~/.config/neofetch/config.conf
-
-# Run
-neofetch
-```
-
-### What It Displays
-
-- OS and kernel
-- Host model
-- Uptime
-- Packages installed
-- Shell
-- Display resolution
-- Desktop environment
-- Window manager
-- CPU and GPU
-- Memory usage
-- ASCII art logo
-
-### Customization
-
-Edit `neofetch/config.conf` to:
-- Add/remove information lines
-- Change ASCII art
-- Modify colors
-- Add custom info blocks
+Terminal file manager. `lfrc` opens images, PDFs, video and audio with macOS `open`, and everything
+else in nvim.
 
 ## 🎯 Tmuxinator
 
@@ -135,73 +81,3 @@ mux list              # layouts
 mux new myproject     # new layout in ~/.config/tmuxinator (lands in this repo)
 mux debug infra       # print the tmux commands without running them
 ```
-
-## 💡 Tips
-
-### GitHub CLI
-
-```bash
-# Set default editor for gh
-gh config set editor nvim
-
-# View all config
-gh config list
-
-# Enable/disable auto-update
-gh config set prompt disabled
-```
-
-### Neofetch in Shell Profile
-
-Add to your shell config to display on terminal startup:
-
-```fish
-# Fish: ~/.config/fish/config.fish
-if status is-interactive
-    neofetch
-end
-```
-
-```zsh
-# Zsh: ~/.zshrc
-neofetch
-```
-
-## 🔄 Updating Configurations
-
-After modifying config files in this repo:
-
-```bash
-# Changes are automatically reflected (symlinked)
-# Just restart the application
-
-# For gh
-gh config list
-
-# For htop
-# Just restart htop
-
-# For neofetch
-neofetch
-
-# For tmuxinator
-tmuxinator list
-```
-
-## 📚 Resources
-
-- [GitHub CLI Manual](https://cli.github.com/manual/)
-- [htop Documentation](https://htop.dev/)
-- [Neofetch Wiki](https://github.com/dylanaraps/neofetch/wiki)
-- [Tmuxinator Documentation](https://github.com/tmuxinator/tmuxinator)
-
-## 🛠️ Additional Tools to Consider
-
-Other development tools you might want to add configs for:
-
-- **direnv** - Environment variable management per directory
-- **asdf** - Multi-language version manager
-- **k9s** - Kubernetes CLI manager
-- **lazygit** - Terminal UI for git
-- **bat** - Cat clone with syntax highlighting
-- **fzf** - Fuzzy finder
