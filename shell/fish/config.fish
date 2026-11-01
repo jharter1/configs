@@ -76,6 +76,9 @@ if test -f $HOME/anaconda3/bin/conda
     eval $HOME/anaconda3/bin/conda "shell.fish" "hook" $argv | source
 end
 
+# A module that times out (e.g. machine busy) just drops out of the prompt;
+# don't print starship's warning about it over the prompt.
+set -gx STARSHIP_LOG error
 starship init fish | source
 
 # Transient prompt: once a command runs, its full prompt collapses to a faint
