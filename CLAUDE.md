@@ -11,6 +11,7 @@ Personal macOS dotfiles managed via symlinks. No builds, tests, or package manag
 | Repo path | Symlink destination |
 |---|---|
 | `nvim/` | `~/.config/nvim/` |
+| `zed/` | `~/.config/zed/` (whole folder; `zed/.gitignore` keeps Zed's local state out) |
 | `shell/fish/` | `~/.config/fish/` |
 | `shell/omf/` | `~/.config/omf/` |
 | `terminal/starship.toml` | `~/.config/starship.toml` |

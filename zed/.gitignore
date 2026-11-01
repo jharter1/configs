@@ -1,0 +1,9 @@
+# ~/.config/zed is linked here; Zed also keeps local state in it.
+# Track only the config files below.
+*
+!.gitignore
+!settings.json
+!keymap.json
+!tasks.json
+!snippets/
+!snippets/**

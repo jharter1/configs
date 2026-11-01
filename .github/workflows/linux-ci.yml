@@ -17,6 +17,7 @@ jobs:
           fail=0
           check() { [ -L "$1" ] && echo "✓ $1" || { echo "✗ $1 (not a symlink)"; fail=1; }; }
           check "$HOME/.config/nvim"
+          check "$HOME/.config/zed"
           check "$HOME/.config/fish"
           check "$HOME/.config/omf"
           check "$HOME/.config/starship.toml"

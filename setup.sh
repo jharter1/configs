@@ -80,6 +80,7 @@ fi
 # ── 2. Symlinks ──────────────────────────────────────────────────────────────
 step "Symlinks"
 link "$REPO/nvim"                      "$HOME/.config/nvim"
+link "$REPO/zed"                       "$HOME/.config/zed"
 link "$REPO/shell/fish"                "$HOME/.config/fish"
 link "$REPO/shell/omf"                 "$HOME/.config/omf"
 link "$REPO/terminal/starship.toml"    "$HOME/.config/starship.toml"

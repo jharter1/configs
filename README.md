@@ -86,6 +86,7 @@ gh auth login                    # GitHub CLI (uploads your SSH key if you haven
 - **One palette everywhere.** The prompt, tmux, fish, fzf, bat and delta use ANSI colour names rather than hex, so they switch with Ghostty automatically.
 - **tmux:** prefix `ctrl-s`, splits on `|` and `-`, and a status bar along the top: the session and current window as pills, and CPU/RAM that turn yellow or red only when high, plus `ssh` when a pane is connected elsewhere. `prefix` lights up only while you're holding the prefix key. `ctrl-s o` opens the fuzzy session switcher. Ready-made layouts: `mux default`, `mux devops`, `mux infra`, `mux monitor` open in the current project ([details](tools/README.md#-tmuxinator)).
 - **Neovim:** Lua config with LSP (Mason), completion, Telescope, and Tokyo Night Moon/Day. The start screen (`nvim` with no file) has recent files, projects and one-key shortcuts.
+- **Zed:** the same Tokyo Night (Moon / Light, following macOS), IBM Plex Mono, vim keys with relative numbers, and quieter chrome: fewer toolbar buttons, and git blame only after the cursor rests on a line. The theme extension installs itself on first launch.
 - **git:** delta for every diff, merge (not rebase) on pull, LFS, SSH for GitHub URLs. Quiet modern defaults: recent branches first, pruned remotes, clearer conflicts, remembered resolutions. See [git/README.md](git/README.md).
 - **gh:** delta for `gh pr diff`; `gh prs`, `gh mine`, `gh review`, `gh checks`.
 - **btop:** CPU, memory and processes only, in the terminal's own colours.
@@ -98,6 +99,7 @@ configs/
 ├── Brewfile              # Everything setup.sh --all installs
 ├── setup.sh              # Symlinks (+ packages and plugins with --all)
 ├── nvim/                 # → ~/.config/nvim
+├── zed/                  # → ~/.config/zed   (settings.json; Zed's local state is git-ignored)
 ├── shell/
 │   ├── fish/             # → ~/.config/fish   (config.fish, functions/, conf.d/)
 │   └── omf/              # → ~/.config/omf
